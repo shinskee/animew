@@ -1,0 +1,14 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import '/src/shared/styles/media';
+@import '/src/shared/styles/mixins';
+@import '/src/shared/styles/veriables';
+@import '/src/shared/styles/utils';
+
+:root {
+  font-family: var(--font-family-base);
+}
+
+body {
+  background-color: var(--light);
+}

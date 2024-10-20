@@ -1,0 +1,18 @@
+@import './../../../../shared/styles/media';
+@import './../../../../shared/styles/mixins';
+
+.login {
+    @include reset-button;
+
+    padding: 5px 10px;
+    border: transparent;
+    background-color: var(--light);
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--dark);
+
+    @include hover {
+        border: 1px solid var(--dark);
+    }
+}

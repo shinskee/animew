@@ -1,0 +1,40 @@
+:root {
+    --dark: #0D0D0D;
+    --dark-second: #666666;
+    --light: #ffffff;
+    --second-light: #F5F5F5;
+    --primary: #B88E2F;
+    --gray-light: #F4F5F7;
+    --green: #2EC1AC;
+    --red: #E97171;
+
+    --border: 1px solid var(--color-yellow);
+    --border-radius: 8px;
+    --border-radius-small: 7px;
+    --border-radius-large: 45px;
+
+    --shadow: 0 5px 0 0 var(--color-dark);
+
+    --font-family-base: "Noto Sans", sans-serif;
+
+    --container-width: 1380px;
+    --container-padding-x: 32px;
+
+    --section-padding-y: 30px;
+
+    --input-height: 59px;
+    --button-height: 63px;
+
+    --transition-duration: 0.2s;
+
+    --swiper-pagination-bottom: auto;
+    --swiper-pagination-top: auto;
+
+    @include desktop {
+          --section-padding-y: 25px;
+    }
+
+    @include tablet {
+        --section-padding-y: 20px;
+    }
+}

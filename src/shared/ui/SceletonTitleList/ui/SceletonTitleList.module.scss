@@ -1,0 +1,34 @@
+@import './../../../../shared/styles/media';
+@import './../../../../shared/styles/mixins';
+
+.sceletonTitleList {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 15px;
+        height: 100%;
+        width: 100%;
+    
+        @include tablet {
+            grid-template-columns: repeat(3, 2fr);
+        }
+    
+        @include mobile {
+            grid-template-columns: repeat(2, 3fr);
+        }
+    
+        .card {
+            border-radius: 10px;
+            // width: 200px;
+            height: 293px;
+            background-color: var(--second-light);
+    
+            img {
+                border-radius: 10px;
+                width: 100%;
+            }
+        }
+}
+
+@keyframes wave {
+    
+}

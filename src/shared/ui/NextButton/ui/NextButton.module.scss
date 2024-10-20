@@ -1,0 +1,15 @@
+@import './../../../../shared/styles/media';
+@import './../../../../shared/styles/mixins';
+
+.nextButton {
+    @include reset-button;
+
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 30px;
+    color: var(--dark);
+}
