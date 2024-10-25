@@ -1,3 +1,16 @@
 @import './../../../../shared/styles/media';
 @import './../../../../shared/styles/mixins';
 
+.carousel {
+    width: -webkit-fill-available;
+
+    .titleWrapper {
+        padding-block: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .buttons {
+            display: flex;
+        }
+    }
+}

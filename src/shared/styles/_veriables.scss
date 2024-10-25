@@ -3,7 +3,8 @@
     --dark-second: #666666;
     --light: #ffffff;
     --second-light: #F5F5F5;
-    --primary: #B88E2F;
+    --primary: rgb(255, 136, 0);
+    --primary-second: rgba(255, 136, 0, 0.359);
     --gray-light: #F4F5F7;
     --green: #2EC1AC;
     --red: #E97171;
@@ -36,5 +37,9 @@
 
     @include tablet {
         --section-padding-y: 20px;
+    }
+
+    @include mobile {
+        --container-padding-x: 16px;
     }
 }

@@ -1,0 +1,65 @@
+@import './../../../shared/styles/media';
+@import './../../../shared/styles/mixins';
+
+.search {
+    position: relative;
+    display: flex;
+    column-gap: 20px;
+
+    @include mobile {
+        grid-area: search;
+        margin-inline: auto
+    }
+
+    .input {
+        border-radius: 7px;
+        height: 30px;
+        border: none;
+        padding-inline: 10px;
+        transition: all 0.2s;
+        outline: transparent;
+
+        @include hover {
+            outline: 1px solid var(--primary-second)  
+        }
+
+        &:focus,
+        &:active {
+            border: transparent;
+            outline: 1px solid var(--primary)
+        }
+    }
+
+    .buttonSearch {
+        @include reset-button;
+
+        cursor: pointer;
+        border: 1px solid var(--primary);
+        padding-inline: 10px;
+        border-radius: 7px;
+        transition: all 0.2s;
+
+        @include hover {
+            background-color: var(--primary);
+        }
+    }
+
+    .buttonReset {
+        @include reset-button;
+
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        position: absolute;
+        top: 6px;
+        right: 95px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // left: 0;
+
+        @include hover {
+            opacity: 0.8;
+        }
+    }
+}

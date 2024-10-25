@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './FavoritesButton.module.scss'
 
 function FavoritesButton({ onClickDeleteFavorite, onClickAddFavorite, id }) {
     const [isFavorite, setIsFavorite] = useState(true)
+    
     return ( 
         <button 
             onClick={() => {

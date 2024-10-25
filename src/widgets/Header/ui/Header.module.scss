@@ -1,13 +1,39 @@
+@import './../../../shared/styles/media';
+@import './../../../shared/styles/mixins';
+
 .headerWrapper {
-    padding-block: 20px;
+    padding-block: 10px;
     background-color: var(--second-light);
 
     .header {
-        display: flex;
+        display: grid;
+        grid-template-areas: 
+            'logo login search search';
+        grid-template-columns: repeat(1, 1fr);
         justify-content: space-between;
         align-items: center;
+        column-gap: 20px;
+
+        @include mobile {
+            row-gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            grid-template-areas: 
+            'logo login'
+            'search search';
+        }
+
+        .catalog {
+            text-decoration: none;
+            color: var(--dark);
+        }
+
+        .catalogActive {
+            text-decoration: none;
+            color: var(--primary);
+        }
 
         .logo {
+            grid-area: logo;
             display: flex;
             align-items: center;
             column-gap: 20px;
@@ -15,10 +41,44 @@
             font-weight: 700;
             color: var(--dark);
             font-size: 24px;
+
+            @include mobile {
+                font-size: 16px;
+                column-gap: 10px;
+            }
     
             img {
                 border-radius: 50%;
+                transition: all 0.2s;
+                animation: pulse 2s ease-in-out;
+
+                @include mobile {
+                    width: 50px;
+                }
+
+                // @include hover {
+                //     filter: drop-shadow(0px 0px 7px var(--primary));
+                // }
+            }
+
+            span {
+                color: var(--primary);
+                filter: drop-shadow(0px 0px 7px var(--primary));
             }
         }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        filter: drop-shadow(0px 0px 0px var(--primary));
+    }
+
+    50% {
+        filter: drop-shadow(0px 0px 7px var(--primary));
+    }
+
+    100% {
+        filter: drop-shadow(0px 0px 0px var(--primary));
     }
 }

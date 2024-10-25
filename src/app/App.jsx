@@ -2,9 +2,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import Home from '../pages/Home'
 import TitlePage from '../pages/TitlePage'
-import { AuthProvider } from '../shared/auth/AuthContext'
 import FavoritesPage from '../pages/FavoritesPage'
-
+import SearchList from '../pages/Home/components/SearchList/SearchList'
+import authenticate from '../shared/auth/authenticate'
+import Catalog from '../pages/Catalog'
 
 const routes = ([
   {
@@ -23,6 +24,14 @@ const routes = ([
         path: '/favorites',
         element: <FavoritesPage /> 
       },
+      {
+        path: '/search',
+        element: <SearchList /> 
+      },
+      {
+        path: '/catalog',
+        element: <Catalog />
+      },
     ]
   }
 ])
@@ -30,11 +39,11 @@ const router = createBrowserRouter(routes, {
   basename: '/animew-only-react-not-lib/'
 })
 
-function App() { 
+function App() {
+  authenticate()
+  
   return (
-          <AuthProvider>
-            <RouterProvider router={router} />
-          </AuthProvider>
+      <RouterProvider router={router} />
   )
 }
 

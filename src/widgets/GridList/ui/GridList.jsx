@@ -1,17 +1,20 @@
 import { useNavigate } from 'react-router-dom'
-import NextButton from '../../../shared/ui/NextButton'
-import PrevButton from '../../../shared/ui/PrevButton'
 import SceletonTitleList from '../../../shared/ui/SceletonTitleList'
 import styles from './GridList.module.scss'
-import { useState } from 'react'
-import FavoritesButton from '../../../shared/ui/FavoritesButton'
+import useFavorite from '../../../shared/helpers/useFavorite'
+import { useEffect } from 'react'
+import favoriteIcon from './../../../shared/images/favorite.svg'
+import favoriteOffIcon from './../../../shared/images/favorite-off.svg'
 
-function GridList({ isLoading, data, onClickDeleteFavorite, onClickAddFavorite }) {
+function GridList({ data, isLoading, isSuccess, dataFavorites, count }) {
     const navigate = useNavigate()
-    // const [isFavorite, setIsFavorite] = useState(true)
+    const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
+    
+    // if (isLoading) return <div>...Загрузка</div>
 
+    if (isSuccess)     
     return ( 
-        <div className={styles.gridList}>
+        <section className={styles.gridList}>
                 {
                 !isLoading ? 
                     (
@@ -22,30 +25,26 @@ function GridList({ isLoading, data, onClickDeleteFavorite, onClickAddFavorite }
                                 <div key={e.id} className={styles.card}>
                                     <img src={`https://anilibria.top${e.posters?.small.url}`} alt="" onClick={() => navigate(`/title/${e.id}`)} />
                                     <img src={`https://anilibria.top${e.poster?.src}`} alt="" onClick={() => navigate(`/title/${e.id}`)} />
-                                    {/* <button 
-                                        onClick={() => {
-                                            onClickDeleteFavorite(e.id) 
-                                            setIsFavorite(!isFavorite)
-                                        }}
-                                        >
-                                            <span className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }></span>
-                                        </button> */}
-                                    
-                                    <FavoritesButton 
-                                        onClickDeleteFavorite={onClickDeleteFavorite}
-                                        onClickAddFavorite={onClickAddFavorite}
-                                        id={e.id}
-
-                                        />
+                                    {
+                                        dataFavorites?.filter(v => v.id === e.id).length === 1 ? (
+                                            <button onClick={() => onClickDeleteFavorite(e.id, e)}>
+                                                <img src={favoriteIcon} alt="" />
+                                            </button>
+                                        ) : (
+                                            <button onClick={() => onClickAddFavorite(e.id, e)}>
+                                                <img src={favoriteOffIcon} alt="" />
+                                            </button>
+                                        )
+                                    }
                                 </div>
                             ))}
                         </div>
                     ) : 
                     (
-                        <SceletonTitleList />
+                        <SceletonTitleList count={count} />
                     )
                 }
-        </div>
+        </section>
      );
 }
 

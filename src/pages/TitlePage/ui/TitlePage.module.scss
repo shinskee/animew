@@ -1,0 +1,67 @@
+@import './../../../shared/styles/media';
+@import './../../../shared/styles/mixins';
+
+.titlePage {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: start;
+
+    .titleBlock {
+        display: flex;
+        column-gap: 20px;
+
+        .titleEn {
+            margin-bottom: 5px;
+            color: gray;
+        }
+
+        .descrBlock {
+            margin-top: 10px;
+            // display: flex;
+            align-items: center;
+            column-gap: 7px;
+
+            span {
+                font-weight: 400;
+            }
+        }
+    }
+
+    img {
+        border-radius: 10px;
+        height: 300px;
+
+        // @include mobile {
+        //     width: 50%;
+        // }
+    }
+
+    .buttonFavorite,
+    .buttonUnFavorite {
+        @include reset-button;
+
+        cursor: pointer;
+        width: 30%;
+        padding-inline: 10px;
+        height: 55px;
+        border-radius: 10px;
+        transition: all 0.2s;
+    }
+
+    .buttonUnFavorite {
+        background-color: rgba(0, 128, 0, 0.321);
+
+        @include hover {
+            background-color: rgba(0, 128, 0, 0.521);
+        }
+    }
+
+    .buttonFavorite {
+        background-color: rgba(255, 0, 0, 0.343);
+
+        @include hover {
+            background-color: rgba(255, 0, 0, 0.543);
+        }
+    }
+}

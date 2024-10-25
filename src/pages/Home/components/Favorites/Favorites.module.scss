@@ -1,22 +1,36 @@
 @import './../../../../shared/styles/media';
 @import './../../../../shared/styles/mixins';
 
+.favorites {
+    padding-block: 20px;
+    border-radius: 10px;
+    background-color: var(--second-light);
+    width: -webkit-fill-available;
+}
+
 .favoritesTitle {
     cursor: pointer;
+    width: min-content;
+    transition: all 0.2s;
+
+    @include hover {
+        opacity: 0.8;
+    }
 }
 
 .favoritesCards {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 15px;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 15px;
     justify-content: start;
 
     @include tablet {
-        grid-template-columns: repeat(3, 2fr);
+        grid-template-columns: repeat(6, 2fr);
     }
 
     @include mobile {
         grid-template-columns: repeat(2, 3fr);
+        gap: 10px;
     }
 
     .favoritesCard {
@@ -24,10 +38,16 @@
         cursor: pointer;
         width: 100%;
         border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.2s;
 
         img {
             width: 100%;
-            border-radius: 10px;
+            height: 100%;
+        }
+
+        @include hover {
+            opacity: 0.9;
         }
 
         button {
@@ -38,12 +58,9 @@
             top: 0;
             right: 10px;
             content: '';
-            background-color: red;
             opacity: 0.8;
-            width: 30px;
-            height: 50px;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0px 5px 10px 0px gray;
+            width: 20px;
+            height: 30px;
 
             @include hover {
                 opacity: 1;

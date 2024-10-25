@@ -1,42 +1,37 @@
-import { useEffect, useState } from "react";
-import { getSearch, getUpdates } from "../../../../shared/api/api";
-import styles from './SearchList.module.scss'
+import { useEffect } from "react";
 import GridList from "../../../../widgets/GridList";
 
+import styles from './SearchList.module.scss'
+import { useGetSearchQuery } from "../../../../sevices/animeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchText } from "../../../../features/search/searchSlice";
+
 function SearchList() {
-    const [data, setData] = useState()
-    const [isLoading, setIsLoading] = useState(false)
-    const [inputText, setInputText] = useState('')
+    const searchText = useSelector(state => state.search.searchText)
+    const {data, isLoading, isSuccess} = useGetSearchQuery(searchText)
+    const favoritesData = useSelector(state => state.favorites.favorites)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        if (inputText.length > 1) {
-            setIsLoading(true)
-            const setTimeoutId = setTimeout(() => {
-                getData(inputText)
-            }, 1500);
-            return () => clearTimeout(setTimeoutId)
+        return () => {
+            dispatch(setSearchText(''))
         }
-    }, [inputText])
+    }, [])
 
-    const getData = async(inputText) => {
-        const response = await getSearch(inputText)
-        setData(response.data.list); 
-        setIsLoading(false)       
-    }
-
-    const onChangeInput = (e) => {
-        setInputText(e.target.value)
-    }
-
+    if (isLoading) return <div>...Загрузка</div>
+    if (isSuccess)
+        
     return (
         <div className="container">
             <h2>
-                Поиск
+                Результаты поиска
             </h2>
-                <div className={styles.inputWrapper}>
-                    <input className={styles.input} type="text" placeholder="Введите название" onChange={onChangeInput} />
-                </div>
-                <GridList data={data} isLoading={isLoading} />
+                <GridList 
+                    data={data.list}
+                    isSuccess={isSuccess} 
+                    isLoading={isLoading}
+                    dataFavorites={favoritesData}    
+                />
         </div>
      );
 }

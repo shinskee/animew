@@ -1,70 +1,80 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { addFavorite, deleteFavorite, getFavorites, getTitle } from "../../../shared/api/api";
+import { getFavorites, getTitle } from "../../../shared/api/api";
 import ReactPlayer from "react-player";
+import { AuthContext } from "../../../shared/auth/AuthContext";
+
+import styles from './TitlePage.module.scss'
+import { useGetTitleQuery } from "../../../sevices/animeApi";
+import { useSelector } from "react-redux";
+import useFavorite from "../../../shared/helpers/useFavorite";
 
 function TitlePage() {
     const {id} = useParams()
-    const [data, setData] = useState()
-    const [video, setVideo] = useState()
-    const [isLoading, setIsLoading] = useState(true)
+    const { favorites, isChanging } = useSelector(state => state.favorites)
+    const {data, isLoading, isFetching, isSuccess } = useGetTitleQuery(id)
+    const [video, setVideo] = useState('')
     const [isFavorite, setIsFavorite] = useState(false)
-
-    useEffect(() => {
-        getData()
-        getFavorite()
-    }, [])
-
-    const getData = async () => {
-        setIsLoading(true)
-        const response = await getTitle(id)
-        setData(response.data)
-        setVideo(response.data.player.list[1].hls.hd)
-        setIsLoading(false)
-    }
+    const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
     
-    const getFavorite = async () => {
-        const response = await getFavorites()
-        response.data.data.map(e => {
+    useEffect(() => {        
+        favorites.map(e => {
             if (e.id === Number(id)) {
                 setIsFavorite(true)
             }
         })
-    }
-    const onClickAddFavorite = async (id) => {
-        const response = await addFavorite(id)
-        if (response.status === 200) {
-            setIsFavorite(true)
-        }
-    }
 
-    const onClickDeleteFavorite = async (id) => {
-        const response = await deleteFavorite(id)
-        if (response.status === 200) {
+        return () => {
             setIsFavorite(false)
         }
-    }
+    }, [isChanging])
 
-    if (isLoading) return <div>...Загрузка</div>
+    if (isFetching) return <div>...Загрузка</div>
+    
     return ( 
-        <main className="container">
+        <main className={`${styles.titlePage} container`}>
             {data ? (
-                <div>
+                <div className={styles.titleBlock}>
                     <img src={`https://anilibria.top${data.posters.small.url}`} alt="" />
-                    {data.names.ru}
+                    <div>
+                        <p className={styles.titleEn}>{data.names.en}</p>
+                        <h2 className={styles.title}>{data.names.ru}</h2>
+                        <div className={styles.descrBlock}>
+                            <h5>Описание : <span>{data.description}</span></h5>
+                        </div>
+                        <div className={styles.descrBlock}>
+                            <h5>Жанры : <span>{data.genres.join(', ')}</span></h5>
+                        </div>
+                        <div className={styles.descrBlock}>
+                            <h5>Год : <span>{data.season.year}</span></h5>
+                        </div>
+                        <div className={styles.descrBlock}>
+                            <h5>Сезон : <span>{data.season.string}</span></h5>
+                        </div>
+                        <div className={styles.descrBlock}>
+                            <h5>Статус : <span>{data.status.string}</span></h5>
+                        </div>
+                        <div className={styles.descrBlock}>
+                            <h5>Тип : <span>{data.type.full_string}</span></h5>
+                        </div>
+                    </div>
                 </div>
             ) : (
                 <div>...Загрузка</div>
             )}
-            <button onClick={isFavorite ? () => onClickDeleteFavorite(id) : () => onClickAddFavorite(id)}>{isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}</button>
+            <button 
+                className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }
+                onClick={isFavorite ? () => onClickDeleteFavorite(data.id) : () => onClickAddFavorite(data.id, data)}>
+                    {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+            </button>
             <div>
-                <select name="" id="" onChange={(e) => setVideo(e.target.value)}>
+                <select name="" id="" onChange={(e) => {setVideo(e.target.value)}}>
                     {Object.entries(data?.player.list).map(e => (
                             <option key={e[0]} value={e[1].hls.hd}>{e[0]}. {e[1].name}</option>
                         ))}
                 </select>
             </div>
-            <ReactPlayer controls url={`https://cache.libria.fun${video}`} />
+            <ReactPlayer width={'100%'} controls url={`https://cache.libria.fun${video ? video : data.player.list[1].hls.hd}`} />
         </main>
      );
 }

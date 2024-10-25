@@ -8,7 +8,7 @@ function Layout() {
         <div className={styles.layout}>
             <Header />
                 <Outlet />
-            <Footer />
+            {/* <Footer /> */}
         </div>
      );
 }

@@ -1,51 +1,42 @@
 import { useContext, useEffect, useState } from "react";
-import { getFavorites, getFavoritesCarousel, getUpdates } from "../../../shared/api/api";
+import { getFavoritesCarousel, getUpdates } from "../../../shared/api/api";
 import Favorites from "../components/Favorites/Favorites";
-import SearchList from "../components/SearchList/SearchList";
 import Updates from "../components/Updates/Updates";
-import { AuthContext } from "../../../shared/auth/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetFavoritesQuery, useGetUpdatesQuery } from "../../../sevices/animeApi";
+import { resetFavorite, setFavorites } from "../../../features/favorites/favoriteSlice";
 
 function Home() {
-    const [dataFavorites, setDataFavorites] = useState([])
-
-    const [dataUpdates, setDataUpdates] = useState([])
     const [page, setPage] = useState(1)
-
-    const [isLoading, setIsLoading] = useState(false)
-    const {isAuth} = useContext(AuthContext)
-
-    useEffect(() => {
-        setIsLoading(true)
-        getDataUpdates(page)
-    }, [page])
-
-    useEffect(() => {
-        getDataUpdates(page)
-        getDataFavorites()
-
-        return function cleanup() {
-            setDataFavorites([])
-        }
-    }, [isAuth])
-
-    const getDataFavorites = async() => {
-        const response = await getFavoritesCarousel(1)
-        setDataFavorites(response.data.data);
-        setIsLoading(false)
-    }
-
-    const getDataUpdates = async(page) => {
-        const response = await getUpdates(page)
-        setDataUpdates(response.data); 
-        setIsLoading(false)        
-    }
+    const updates = useGetUpdatesQuery(page)
+    const favorites = useGetFavoritesQuery()
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const dispatch = useDispatch()
+    const favoritesData = useSelector(state => state.favorites.favorites)
+    
+    // useEffect(() => {
+    //     if (isAuth) {
+    //         return () => {
+    //             dispatch(resetFavorite())
+    //         }
+    //     }
+    // }, [])
 
     return ( 
         <main>
-            <Favorites data={dataFavorites} setData={setDataFavorites} />
-            <Updates dataFavorites={dataFavorites} setDataFavorites={setDataFavorites} data={dataUpdates} page={page} setPage={setPage} isLoading={isLoading} setData={setDataFavorites} />
-            <SearchList />
+            {isAuth && 
+                <Favorites 
+                    data={favoritesData}
+                    isFetching={favorites.isFetching}
+                />
+            }
+            <Updates 
+                dataFavorites={favoritesData} 
+                data={updates.data} 
+                page={page} 
+                setPage={setPage} 
+                isFetching={updates.isFetching}
+            />
         </main>
      );
 }

@@ -3,7 +3,7 @@
 
 .sceletonTitleList {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(8, 1fr);
         gap: 15px;
         height: 100%;
         width: 100%;
@@ -17,12 +17,13 @@
         }
     
         .card {
+            animation: wave 1s linear infinite alternate;
             border-radius: 10px;
-            // width: 200px;
-            height: 293px;
-            background-color: var(--second-light);
+            height: 200px;
     
             img {
+                // max-height: 300px;
+                height: 100%;
                 border-radius: 10px;
                 width: 100%;
             }
@@ -30,5 +31,10 @@
 }
 
 @keyframes wave {
-    
+    0% {
+        background-color: var(--second-light);
+    }
+    100% {
+        background-color: var(--light);
+    }
 }

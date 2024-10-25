@@ -1,9 +1,9 @@
 import styles from './SceletonTitleList.module.scss'
 
-function SceletonTitleList() {
+function SceletonTitleList({ count = 8 }) {
     return ( 
         <div className={styles.sceletonTitleList}>
-            {[...Array(6)].map((_, index) => (
+            {[...Array(count)].map((_, index) => (
                 <div key={index} className={styles.card}>
 
                 </div>

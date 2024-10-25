@@ -1,0 +1,65 @@
+@import './../../../shared/styles/media';
+@import './../../../shared/styles/mixins';
+
+.catalog {
+    .sort {
+        margin-left: auto;
+        width: max-content;
+        column-gap: 5px;
+
+        span {
+            position: relative;
+            cursor: pointer;
+            color: var(--primary);
+            border-bottom: 2px dotted var(--primary);
+        }
+    }
+
+    .sortList {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        background-color: var(--light);
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+
+        div {
+            cursor: pointer;
+            transition: all 0.2s;
+
+            @include hover {
+                color: var(--primary);
+            }
+        }
+    }
+
+    .paginationWrapper {
+        display: flex;
+        column-gap: 10px;
+        width: 500px;
+        overflow: hidden;
+    
+        .pagination {
+            display: flex;
+            column-gap: 10px;
+        
+            .paginationActive,
+            .paginationNotActive {
+                cursor: pointer;
+                border-radius: 50%;
+                width: 25px;
+                aspect-ratio: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .paginationActive {
+                background-color: var(--primary);
+            }
+        }
+    }
+}

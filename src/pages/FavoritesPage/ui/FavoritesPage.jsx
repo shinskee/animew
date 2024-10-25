@@ -1,34 +1,31 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { addFavorite, deleteFavorite, getFavorites } from "../../../shared/api/api";
-
-import styles from './FavoritesPage.module.scss'
 import GridList from "../../../widgets/GridList";
+import styles from './FavoritesPage.module.scss'
+import { useLazyGetFavoritesQuery } from "../../../sevices/animeApi";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setFavorites } from "../../../features/favorites/favoriteSlice";
+import { useNavigate } from "react-router-dom";
 
 function FavoritesPage() {
-    const {id} = useParams()
-    const [data, setData] = useState()
-    const [isLoading, setIsLoading] = useState(true)
+    const isAuth = useSelector(state => state.auth.isAuth)
+    const [ getFavorite, {data, isLoading, isSuccess, isFetching} ] = useLazyGetFavoritesQuery()
+    const dataFavorites = useSelector(state => state.favorites.favorites)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
+        const getData = async () => {
+            const response = await getFavorite()
+            if (response.isSuccess) {
+                dispatch(setFavorites(response.data.data))   
+            }
+        }
         getData()
-    }, [])
+    }, [isAuth])
 
-    const getData = async () => {
-        const response = await getFavorites(id)
-        setData(response.data.data)
-        setIsLoading(false)
-    }
-
-    const onClickDeleteFavorite = async (id) => {
-        const response = await deleteFavorite(id)
-    }
-
-    const onClickAddFavorite = async (id) => {
-        const response = await addFavorite(id)
-    }
-
-    if (isLoading) return <div>...Загрузка</div>
+    if (!isAuth) navigate('/')
+    if (isFetching) return <div>...Загрузка</div>
+    if (isSuccess)
     return ( 
         <main>
             {data && (
@@ -36,7 +33,12 @@ function FavoritesPage() {
                     <h2>
                         Избранное
                     </h2>
-                    <GridList data={data} isLoading={isLoading} onClickDeleteFavorite={onClickDeleteFavorite} onClickAddFavorite={onClickAddFavorite} />
+                    <GridList 
+                        data={data.data} 
+                        isLoading={isLoading}
+                        isSuccess={isSuccess}
+                        dataFavorites={dataFavorites}
+                        />
                 </div>
             )}
         </main>
