@@ -9,11 +9,11 @@ function Updates({ page, setPage, data, isFetching, setDataFavorites, dataFavori
     
     const onclickLeft = useCallback(() => {
         setPage(prev => prev - 1)
-    })
+    }, [])
 
     const onclickRight = useCallback(() => {
         setPage(prev => prev + 1)
-    })
+    }, [])
 
     return (
         <section className={`${styles.carousel} container`}>

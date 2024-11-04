@@ -1,97 +1,80 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetCatalogReleasesQuery, useGetCatalogSortQuery, useLazyGetCatalogReleasesQuery } from '../../../sevices/animeApi';
+import { useGetCatalogReleasesQuery, useGetCatalogSortQuery, useGetGenresQuery } from '../../../sevices/animeApi';
 import GridList from '../../../widgets/GridList/ui/GridList';
 
 import styles from './Catalog.module.scss'
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { setPage, setSortValue } from '../../../features/catalog/catalogSlice';
+import { resetCatalog, setGenres, setPage, setSort } from '../../../features/catalog/catalogSlice';
 import Pagination from '../../../shared/ui/Pagination';
 import useOutClick from '../../../widgets/Search/useOutClick';
+import Filters from './components/Filters/Filters';
 
 function Catalog() {
     const { sortValue, page } = useSelector(state => state.catalog)
-    const { data, isFetching, isSuccess } = useGetCatalogReleasesQuery({page, sortValue})
+    const genresInput = useSelector(state => state.catalog.genres)
+    const { data, isFetching, isSuccess, isLoading } = useGetCatalogReleasesQuery({page, sortValue, genres: genresInput.map(e => e.id)})
     const dataFavorites = useSelector(state => state.favorites.favorites)
     const sort = useGetCatalogSortQuery()
-    const [ isOpenSort, setIsOpenSort ] = useState(false)
-    const [ sortLabel, setSortLabel ] = useState('')
-    const [ paginationChunk, setPaginationChunk ] = useState([0, 10])
+    const genres = useGetGenresQuery()
     const dispatch = useDispatch()
     const totalPages = data?.meta.pagination.total_pages
     const sortRef = useRef()
     useOutClick(() => setIsOpenSort(false), sortRef)
+    const [ isOpenMobileFilter, setIsOpenMobileFilter ] = useState(false)
 
     // console.log(data.meta.pagination.total_pages);
-    
 
     useEffect(() => {
-        if (sort.isSuccess) {
-            setSortLabel(sort.data[0].label)
-        }
-
         return () => {
-            setSortLabel('')
+            dispatch(resetCatalog())
         }
     }, [sort.isSuccess])
 
-    const onClickSort = () => {
-        setIsOpenSort(true)
-    }
-
-    const onClickSortValue = (label, value) => {
-        setIsOpenSort(!isOpenSort)
-        setSortLabel(label)
-        dispatch(setSortValue(value))
+    const onClickSort = (value, label) => {
+        dispatch(setSort({text: label, value: value}))
     }
 
     const onClickPage = useCallback((page) => {
         dispatch(setPage(page))
-    })
+    }, [])
 
-    const onClickNextPagintation = useCallback(() => {
-        setPaginationChunk([paginationChunk[1], paginationChunk[1] + 10])
-    })
-
-    const onClickPrevPagintation = useCallback(() => {
-        setPaginationChunk([paginationChunk[0] - 10, paginationChunk[1] - 10])
-    })
-    
-    // if (isFetching) return <div>...Загрузка</div>
+    const onClickGenre = (genre) => {
+        dispatch(setGenres(genre))
+    }
 
     return ( 
             <>
-                {data && (
                     <main className={`${styles.catalog} container`}>
-                        <div className={styles.sort} ref={sortRef} >
-                            Сортировка по <span onClick={onClickSort} >{sortLabel}</span>
+                        <div className={styles.catalogLeft}>
+                            <GridList 
+                                data={data?.data} 
+                                isLoading={isLoading}
+                                isFetching={isFetching}
+                                isSuccess={isSuccess}
+                                dataFavorites={dataFavorites}
+                                count={32}
+                                />
                         </div>
-                        {isOpenSort && (
-                                <div className={styles.sortList}>
-                                        {
-                                            sort.data && (
-                                                sort.data.map(e => (
-                                                    <div key={e.value} onClick={() => onClickSortValue(e.label, e.value)}>
-                                                        {e.label}
-                                                    </div>
-                                                ))
-                                            )
-                                        }
-                                    </div>
-                                )}
-                        <GridList 
-                            data={data.data} 
-                            isLoading={isFetching}
-                            isSuccess={isSuccess}
-                            dataFavorites={dataFavorites}
-                            count={24}
-                            />
-                        <Pagination totalPages={totalPages}
-                            page={page} onClickPage={onClickPage}
-                            onClickNext={onClickNextPagintation}
-                            onClickPrev={onClickPrevPagintation}
-                            paginationChunk={paginationChunk} />
+                        <div className={styles.catalogBottom}>
+                            <Pagination 
+                                    totalPages={totalPages}
+                                    page={page} onClickPage={onClickPage}
+                                />
+                        </div>
+                        <div className={styles.rightBlock}>
+                            <div className={styles.filtersTitle} onClick={() => setIsOpenMobileFilter(!isOpenMobileFilter)}>
+                                Фильтры
+                            </div>
+                            <Filters 
+                                isOpenMobileFilter={isOpenMobileFilter}
+                                genresData={genres.data}
+                                sortData={sort.data}
+                                onClickGenre={onClickGenre}
+                                onClickSort={onClickSort}
+                             />
+                        </div>
                     </main>
-                )}
+                
             </>
 )
 }

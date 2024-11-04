@@ -10,8 +10,27 @@
 }
 
 body {
-  @include fluid-text(18, 14);
-  background-color: var(--light);
+  @include fluid-text(16, 14);
+
+  background: var(--bg);
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--bg-second);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--bg-3);
+    border-radius: 10px;
+    border: 1px solid var(--bg-3);
+
+    @include hover {
+      background-color: var(--bg-4);
+    }
+  }
 }
 
 main {
@@ -26,9 +45,25 @@ h2 {
 }
 
 h5, p {
+  @include fluid-text(18, 16);
+
   margin: 0;
 }
 
 section {
   padding-block: 20px;
+}
+
+button, body, h1, h2, h5, p, a, input {
+  color: var(--light);
+}
+
+input {
+  padding: 0;
+  border: transparent;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
 }

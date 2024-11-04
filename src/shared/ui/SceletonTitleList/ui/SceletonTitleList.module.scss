@@ -19,22 +19,16 @@
         .card {
             animation: wave 1s linear infinite alternate;
             border-radius: 10px;
-            height: 200px;
-    
-            img {
-                // max-height: 300px;
-                height: 100%;
-                border-radius: 10px;
-                width: 100%;
-            }
+            width: 100%;
+            aspect-ratio: 5889160200228700/8412231522718843;
         }
 }
 
 @keyframes wave {
     0% {
-        background-color: var(--second-light);
+        background-color: var(--bg-3);
     }
     100% {
-        background-color: var(--light);
+        background-color: var(--bg-second);
     }
 }

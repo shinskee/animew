@@ -1,37 +1,39 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import GridList from "../../../../widgets/GridList";
 
 import styles from './SearchList.module.scss'
 import { useGetSearchQuery } from "../../../../sevices/animeApi";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchText } from "../../../../features/search/searchSlice";
+import { resetInput, setSearchText } from "../../../../features/search/searchSlice";
+import Pagination from "../../../../shared/ui/Pagination";
 
 function SearchList() {
     const searchText = useSelector(state => state.search.searchText)
-    const {data, isLoading, isSuccess} = useGetSearchQuery(searchText)
+    const {data, isLoading, isSuccess, isFetching} = useGetSearchQuery(searchText)
     const favoritesData = useSelector(state => state.favorites.favorites)
     const dispatch = useDispatch()
+    
+
 
     useEffect(() => {
         return () => {
             dispatch(setSearchText(''))
+            dispatch(resetInput())
         }
     }, [])
 
-    if (isLoading) return <div>...Загрузка</div>
-    if (isSuccess)
+    // if (isLoading) return <div>...Загрузка</div>
+    // if (isSuccess)
         
     return (
         <div className="container">
-            <h2>
-                Результаты поиска
-            </h2>
-                <GridList 
-                    data={data.list}
-                    isSuccess={isSuccess} 
-                    isLoading={isLoading}
-                    dataFavorites={favoritesData}    
-                />
+                        <GridList 
+                            data={data?.list}
+                            isSuccess={isSuccess}
+                            isFetching={isFetching}
+                            isLoading={isLoading}
+                            dataFavorites={favoritesData}    
+                        />
         </div>
      );
 }

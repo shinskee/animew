@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  searchText: ''
+  searchText: '',
+  inputText: ''
 }
 
 export const searchSlice = createSlice({
@@ -11,10 +12,16 @@ export const searchSlice = createSlice({
     setSearchText: (state, action) => {
         state.searchText = action.payload
     },
+    resetInput: (state) => {
+      state.inputText = ''
+    },
+    setInputText: (state, action) => {
+      state.inputText = action.payload
+  },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setSearchText } = searchSlice.actions
+export const { setSearchText, resetInput, setInputText } = searchSlice.actions
 
 export default searchSlice.reducer

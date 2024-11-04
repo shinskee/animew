@@ -1,10 +1,10 @@
 import styles from './NextButton.module.scss'
-import rightArrow from './../../../images/right-arrow.svg'
+import RightArrow from './../../../images/right-arrow.svg?react'
 
 function NextButton({ ...props }) {
     return ( 
         <button {...props} className={styles.nextButton}>
-            <img src={rightArrow} alt="" width={30} />
+            <RightArrow className={styles.rightArrow} />
         </button>
      );
 }

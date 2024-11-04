@@ -1,11 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import Home from '../pages/Home'
-import TitlePage from '../pages/TitlePage'
-import FavoritesPage from '../pages/FavoritesPage'
-import SearchList from '../pages/Home/components/SearchList/SearchList'
 import authenticate from '../shared/auth/authenticate'
-import Catalog from '../pages/Catalog'
+import { lazy } from 'react'
+const TitlePage = lazy(() => import('../pages/TitlePage'))
+const Catalog = lazy(() => import('../pages/Catalog'))
+const SearchList = lazy(() => import('../pages/Home/components/SearchList/SearchList'))
+const FavoritesPage = lazy(() => import('../pages/FavoritesPage'))
 
 const routes = ([
   {

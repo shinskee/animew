@@ -3,7 +3,7 @@
 
 .headerWrapper {
     padding-block: 10px;
-    background-color: var(--second-light);
+    background-color: var(--bg-second);
 
     .header {
         display: grid;
@@ -24,7 +24,12 @@
 
         .catalog {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--light);
+            transition: all 0.2s;
+
+            @include hover {
+                opacity: 0.8;
+            }
         }
 
         .catalogActive {

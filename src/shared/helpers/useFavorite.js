@@ -18,14 +18,14 @@ function useFavorite() {
                 dispatch(setAddFavorite({id: item.id, poster: {src: item.posters.small.url} }))
             }
         }
-    })
+    }, [])
 
     const onClickDeleteFavorite = useCallback(async (id) => {
         const response = await deleteFavorite(id)
         if (response.isSuccess) {
             dispatch(setDeleteFavorite(id))
         }
-    })
+    }, [])
     
     return {
         onClickAddFavorite,

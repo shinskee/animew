@@ -1,13 +1,20 @@
 @import './../../../shared/styles/media';
 @import './../../../shared/styles/mixins';
 
+@keyframes wave {
+    0% {
+        background-color: var(--bg-3);
+    }
+    100% {
+        background-color: var(--bg-second);
+    }
+}
+
 .gridList {
     .list {
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         gap: 15px;
-        height: 100%;
-        width: 100%;
     
         @include tablet {
             grid-template-columns: repeat(6, 2fr);
@@ -17,39 +24,57 @@
             grid-template-columns: repeat(2, 3fr);
             gap: 10px;
         }
-    
+
         .card {
             position: relative;
             cursor: pointer;
             border-radius: 10px;
-            transition: all 0.2s;
-    
-            img {
-                max-height: 300px;
-                border-radius: 10px;
-                width: 100%;
-            }
+            transition: var(--transition);
+            overflow: hidden;
 
-            @include hover {
-                opacity: 0.9;
+            .cardSceleton {
+                border-radius: 10px;
+                aspect-ratio: 5889160200228700/8412231522718843;
+                width: 100%;
+                background-color: var(--bg-3);
+                animation: wave 1s linear infinite alternate;
+            }
+    
+            .cardImg {
+                animation: wave 1s linear infinite alternate;
+                background-color: var(--bg-3);
+                width: 100%;
+                aspect-ratio: 5889160200228700/8412231522718843;
+                border-radius: 10px;
+                transition: var(--transition);
+
+                @include hover {
+                    opacity: 0.9;
+                }
             }
 
             button {
                 @include reset-button;
-    
-                cursor: pointer;
-                position: absolute;
-                top: 0;
-                right: 10px;
-                content: '';
-                opacity: 0.8;
-                width: 20px;
-                height: 30px;
-    
-                @include hover {
-                    opacity: 1;
+                
+                img {
+                    cursor: pointer;
+                    position: absolute;
+                    top: 0;
+                    right: 10px;
+                    content: '';
+                    opacity: 0.8;
+                    width: 20px;
+                    height: 30px;
+
+                    @include hover {
+                        opacity: 1;
+                    }
                 }
             }
         }
     }
+}
+
+@keyframes wave {
+    
 }

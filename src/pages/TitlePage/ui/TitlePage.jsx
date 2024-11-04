@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getFavorites, getTitle } from "../../../shared/api/api";
 import ReactPlayer from "react-player";
-import { AuthContext } from "../../../shared/auth/AuthContext";
 
 import styles from './TitlePage.module.scss'
 import { useGetTitleQuery } from "../../../sevices/animeApi";
@@ -12,10 +10,12 @@ import useFavorite from "../../../shared/helpers/useFavorite";
 function TitlePage() {
     const {id} = useParams()
     const { favorites, isChanging } = useSelector(state => state.favorites)
-    const {data, isLoading, isFetching, isSuccess } = useGetTitleQuery(id)
-    const [video, setVideo] = useState('')
+    const {data, isLoading, isError } = useGetTitleQuery(id)
+    const [video, setVideo] = useState(1)
+    const [quality, setQuality] = useState('hd')
     const [isFavorite, setIsFavorite] = useState(false)
     const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
+    const qualityArr = ['hd', 'fhd', 'sd']
     
     useEffect(() => {        
         favorites.map(e => {
@@ -29,14 +29,22 @@ function TitlePage() {
         }
     }, [isChanging])
 
-    if (isFetching) return <div>...Загрузка</div>
+    if (isLoading) return <div>...Загрузка</div>
+    if (isError) return <div>Ошибка, попробуйте позже</div>
     
     return ( 
         <main className={`${styles.titlePage} container`}>
             {data ? (
                 <div className={styles.titleBlock}>
-                    <img src={`https://anilibria.top${data.posters.small.url}`} alt="" />
-                    <div>
+                    <div className={styles.leftBlock}>
+                        <img src={`https://anilibria.top${data.posters.small.url}`} alt="" />
+                        <button 
+                            className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }
+                            onClick={isFavorite ? () => onClickDeleteFavorite(data.id) : () => onClickAddFavorite(data.id, data)}>
+                                {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+                        </button>
+                    </div>
+                    <div className={styles.rightBlock}>
                         <p className={styles.titleEn}>{data.names.en}</p>
                         <h2 className={styles.title}>{data.names.ru}</h2>
                         <div className={styles.descrBlock}>
@@ -62,19 +70,21 @@ function TitlePage() {
             ) : (
                 <div>...Загрузка</div>
             )}
-            <button 
-                className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }
-                onClick={isFavorite ? () => onClickDeleteFavorite(data.id) : () => onClickAddFavorite(data.id, data)}>
-                    {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
-            </button>
-            <div>
-                <select name="" id="" onChange={(e) => {setVideo(e.target.value)}}>
-                    {Object.entries(data?.player.list).map(e => (
-                            <option key={e[0]} value={e[1].hls.hd}>{e[0]}. {e[1].name}</option>
+            <section className={`${styles.playerWrapper}`}>
+                <div className={styles.selectWrapper}>
+                    <select className={styles.select} name="series" id="series" onChange={(e) => {setVideo(e.target.value)}}>
+                        {Object.entries(data?.player.list).map(e => (
+                                <option key={e[0]} value={e[0]}>{e[0]}. {e[1].name}</option>
+                            ))}
+                    </select>
+                    <select className={styles.select} name="quality" id="quality" onChange={(e) => {setQuality(e.target.value)}}>
+                        {qualityArr.map(e => (
+                            <option key={e} value={e}>{e}</option>
                         ))}
-                </select>
-            </div>
-            <ReactPlayer width={'100%'} controls url={`https://cache.libria.fun${video ? video : data.player.list[1].hls.hd}`} />
+                    </select>
+                </div>
+                <ReactPlayer className={styles.player} style={{marginInline: 'auto'}} width={'97%'} height={'100%'} controls url={`https://cache.libria.fun${data.player.list[video].hls[quality]}`} />
+            </section>
         </main>
      );
 }

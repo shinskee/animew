@@ -3,6 +3,7 @@
 
 .search {
     position: relative;
+    right: 0;
     display: flex;
     column-gap: 20px;
 
@@ -11,13 +12,15 @@
         margin-inline: auto
     }
 
-    .input {
+    .inputActive {
+        padding-inline: 10px;
+        width: 200px;
         border-radius: 7px;
         height: 30px;
         border: none;
-        padding-inline: 10px;
-        transition: all 0.2s;
+        transition: var(--transition);
         outline: transparent;
+        background-color: var(--bg-second);
 
         @include hover {
             outline: 1px solid var(--primary-second)  
@@ -30,17 +33,36 @@
         }
     }
 
+    .input {
+        transition: all 0.2s;
+        background-color: var(--bg-second);
+        width: 0px;
+    }
+
     .buttonSearch {
         @include reset-button;
 
         cursor: pointer;
-        border: 1px solid var(--primary);
         padding-inline: 10px;
         border-radius: 7px;
-        transition: all 0.2s;
+        transition: var(--transition);
 
         @include hover {
-            background-color: var(--primary);
+            .searchIcon {
+                g {
+                    opacity: 0.8;
+                }
+            }
+        }
+
+        .searchIcon {
+            width: 20px;
+            height: 20px;
+
+            g {
+                transition: all 0.2s;
+                fill: var(--light);
+            }
         }
     }
 
@@ -56,7 +78,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        // left: 0;
 
         @include hover {
             opacity: 0.8;

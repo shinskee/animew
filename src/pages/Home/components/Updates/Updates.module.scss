@@ -2,6 +2,8 @@
 @import './../../../../shared/styles/mixins';
 
 .carousel {
+    background-color: var(--bg);
+    border-radius: var(--border-radius);
     width: -webkit-fill-available;
 
     .titleWrapper {

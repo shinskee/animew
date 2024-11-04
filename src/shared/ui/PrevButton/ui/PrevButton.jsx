@@ -1,10 +1,10 @@
 import styles from './PrevButton.module.scss'
-import leftArrow from './../../../images/left-arrow.svg'
+import LeftArrow from './../../../images/left-arrow.svg?react'
 
 function PrevButton({ ...props }) {
     return ( 
         <button {...props} className={styles.prevButton}>
-            <img src={leftArrow} alt="" width={30} />
+            <LeftArrow className={styles.leftArrow} />
         </button>
      );
 }

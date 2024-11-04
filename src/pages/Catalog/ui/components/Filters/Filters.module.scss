@@ -1,0 +1,142 @@
+@import './../../../../../shared/styles/media';
+@import './../../../../../shared/styles/mixins';
+
+.filters {
+    width: 100%;
+
+    @include tablet {
+        // left: 0;
+        // right: 0;
+        // top: 0;
+        // bottom: 0;
+        // position: absolute;
+        background: var(--bg-second);
+        transition: var(--transition);
+        display: none;
+    }
+
+    .filterTitle {
+        width: 100%;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        
+        @include tablet {
+            padding-inline: 10px;
+        }
+    }
+}
+
+.activeMobile {
+    display: block;
+    padding-bottom: 20px;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.filterActive {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--bg-3);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    user-select: none;
+
+    &::after {
+        position: absolute;
+        content: '';
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        border-radius: 0 10px 10px 0;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+
+    @include hover {
+        opacity: 0.8;
+    }
+
+    @include tablet {
+        margin-inline: 10px;
+        padding: 10px;
+    }
+}
+
+.filterList {
+    overflow-y: scroll;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    height: 0;
+    transition: var(--transition);
+    background-color: var(--bg-3);
+    border-radius: var(--border-radius);
+    font-weight: 200;
+    // border: 1px solid transparent;
+    padding-inline: 10px;
+
+    @include tablet {
+        margin-inline: 10px;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+      }
+    
+      &::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+    
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--primary-second);
+        border-radius: 10px;
+        border: 1px solid var(--primary-second);
+    
+        @include hover {
+          background-color: var(--primary);
+          border: 1px solid var(--primary);
+        }
+      }
+
+    .filterItem,
+    .filterItemActive {
+        cursor: pointer;
+
+        @include hover {
+            opacity: 0.8;
+        }
+    }
+    
+    .filterItemActive {
+        color: var(--primary);
+    }
+}
+
+.active {
+    height: 150px;
+    transition: var(--transition);
+    // border: 1px solid var(--bg-3);
+    padding: 10px;
+    box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.144);
+}
+
+.clickAnimation {
+    &::after{
+        animation-name: click;
+        animation-duration: 0.2s;
+    }
+}
+
+@keyframes click {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 100%;
+    }
+}

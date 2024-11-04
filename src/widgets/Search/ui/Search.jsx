@@ -1,14 +1,18 @@
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { setSearchText } from '../../../features/search/searchSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setInputText, setSearchText } from '../../../features/search/searchSlice';
 import { useEffect, useRef, useState } from 'react';
 import resetInputIcon from './../../../shared/images/delete-input.svg'
+import SearchIcon from './../../../shared/images/search.svg?react'
+
 
 import styles from './Search.module.scss'
 import useOutClick from '../useOutClick';
 
 function Search() {
-    const [ inputText, setInputText ] = useState('')
+    const inputText = useSelector(state => state.search.inputText)
+    // const [ inputText, setInputText ] = useState('')
+    const [ isInput, setIsInput ] = useState(false)
     const inputRef = useRef()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -16,10 +20,12 @@ function Search() {
     useOutClick(() => setIsButtonResetActive(false), inputRef)
 
     useEffect(() => {
-        if (inputRef.current.value.length >= 1) {
-            setIsButtonResetActive(true)
-        } else {
-            setIsButtonResetActive(false)
+        if (isInput) {
+            if (inputRef.current.value.length >= 1) {
+                setIsButtonResetActive(true)
+            } else {
+                setIsButtonResetActive(false)
+            }
         }
     }, [inputText])
 
@@ -30,25 +36,40 @@ function Search() {
     }
 
     const onClick = () => {
-        navigate('/search')
-        dispatch(setSearchText(inputRef.current.value))
+            // navigate('/search')
+            // dispatch(setSearchText(inputRef.current.value))
+        setIsInput(!isInput)
+        !isInput && inputRef.current.focus()
     }
 
     const onClickReset = () => {
-        setInputText('')
+        dispatch(setInputText(''))
         inputRef.current.focus()
+    }
+
+    const onKeyDownEnter = (e) => {
+        if (e.key === 'Enter') {
+            navigate('/search')
+            dispatch(setSearchText(inputRef.current.value))
+        }
     }
     
 
     return ( 
         <div className={styles.search}>
-                <input ref={inputRef} onClick={onClickInput} className={styles.input} type="text" placeholder="Введите название" onChange={(e) => setInputText(e.target.value) } value={inputText} />
+                    <input 
+                        ref={inputRef} onKeyDown={onKeyDownEnter} onClick={onClickInput} 
+                        className={isInput ? styles.inputActive : styles.input} type="text" placeholder="Введите название" 
+                        onChange={(e) => dispatch(setInputText(e.target.value)) } value={inputText} 
+                    />
                 {isButtonResetActive && (
                     <button className={styles.buttonReset} onClick={onClickReset}>
                         <img src={resetInputIcon} alt="" width={20} />
                     </button>
                 )}
-                <button className={styles.buttonSearch} onClick={onClick} >Поиск</button>
+                <button className={styles.buttonSearch} onClick={onClick} >
+                    <SearchIcon className={styles.searchIcon} />
+                </button>
         </div>
      );
 }

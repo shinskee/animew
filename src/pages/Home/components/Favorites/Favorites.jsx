@@ -17,7 +17,7 @@ function Favorites({ data, isFetching }) {
         if (response.status === 200) {
             dispatch(setDeleteFavorite(id))
         }
-    }) 
+    }, []) 
 
     return (
         <>

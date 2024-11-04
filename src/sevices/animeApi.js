@@ -15,7 +15,7 @@ export const animeApi = createApi({
         query: () => `https://anilibria.top/api/v1/accounts/users/me/favorites/releases`,
       }),
       getSearch: builder.query({
-        query: (searchText) => `title/search?search=${searchText}&limit=24`,
+        query: (searchText) => `title/search?search=${searchText}&limit=-1&`,
       }),
       addFavorite: builder.query({
         query: (id) => ({
@@ -32,13 +32,16 @@ export const animeApi = createApi({
         })
       }),
       getCatalogReleases: builder.query({
-        query: ({page, sortValue}) => `https://anilibria.top/api/v1/anime/catalog/releases?page=${page}&limit=24&f[sorting]=${sortValue}`,
+        query: ({page, sortValue, genres}) => `https://anilibria.top/api/v1/anime/catalog/releases?page=${page}&limit=32&f[sorting]=${sortValue}&${genres && `f[genres]=${genres}`}`,
       }),
       getCatalogSort: builder.query({
         query: () => `https://anilibria.top/api/v1/anime/catalog/references/sorting`,
       }),
       getTitle: builder.query({
         query: (id) => `title?id=${id}`,
+      }),
+      getGenres: builder.query({
+        query: () => `https://anilibria.top/api/v1/anime/catalog/references/genres`,
       }),
   }),
 })
@@ -50,5 +53,6 @@ export const { useGetUpdatesQuery, useLazyGetFavoritesQuery,
     useGetCatalogReleasesQuery,
     useLazyGetCatalogReleasesQuery,
     useGetCatalogSortQuery,
-    useGetTitleQuery
+    useGetTitleQuery,
+    useGetGenresQuery
  } = animeApi

@@ -4,12 +4,30 @@
 .titlePage {
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 50px;
     align-items: start;
 
+    .leftBlock {
+        display: flex;
+        row-gap: 20px;
+        flex-direction: column;
+    }
+    // .rightBlock {
+    //     background-color: var(--second-light);
+    // }
+
     .titleBlock {
+        position: relative;
+        border-radius: 20px;
+        padding: 20px;
+        border: 1px solid var(--primary-second);
         display: flex;
         column-gap: 20px;
+
+        @include mobile {
+            flex-direction: column;
+            row-gap: 20px;
+        }
 
         .titleEn {
             margin-bottom: 5px;
@@ -31,37 +49,88 @@
     img {
         border-radius: 10px;
         height: 300px;
+        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
 
-        // @include mobile {
-        //     width: 50%;
-        // }
+        @include mobile {
+            width: 210px;
+        }
     }
 
     .buttonFavorite,
     .buttonUnFavorite {
         @include reset-button;
 
+        bottom: -16px;
+        position: absolute;
         cursor: pointer;
-        width: 30%;
+        width: 220px;
         padding-inline: 10px;
-        height: 55px;
-        border-radius: 10px;
+        height: 32px;
+        border-radius: 7px;
         transition: all 0.2s;
     }
 
     .buttonUnFavorite {
-        background-color: rgba(0, 128, 0, 0.321);
+        border: 1px solid var(--primary-second);
+        background-color: white;
 
         @include hover {
-            background-color: rgba(0, 128, 0, 0.521);
+            background-color: var(--primary);
         }
     }
 
     .buttonFavorite {
-        background-color: rgba(255, 0, 0, 0.343);
+        background-color: rgb(212, 12, 12);
+        color: white;
 
         @include hover {
-            background-color: rgba(255, 0, 0, 0.543);
+            background-color: rgb(181, 13, 13);
+        }
+    }
+}
+
+.playerWrapper {
+    padding-top: 30px;
+    position: relative;
+    // background-color: var(--second-light);
+    border: 1px solid var(--primary-second);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    border-radius: 10px;
+
+    @include mobile {
+        background-color: var(--light);
+    }
+}
+.selectWrapper {
+    left: 0;
+    top: -15px;
+    position: absolute;
+    padding-inline: 20px;
+    display: flex;
+    column-gap: 10px;
+
+    .select {
+        height: 30px;
+        border-radius: 5px;
+        padding-inline: 5px;
+        transition: all 0.2s;
+        border: transparent;
+        outline: 1px solid var(--primary-second);
+        cursor: pointer;
+
+        &:focus {
+            outline: 1px solid var(--primary);
+        }
+
+        @include hover {
+            outline: 1px solid var(--primary-second);
+        }
+
+        @include mobile {
+            border: 1px solid var(--primary-second);
         }
     }
 }
