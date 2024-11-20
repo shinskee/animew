@@ -1,78 +1,102 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetCatalogReleasesQuery, useGetCatalogSortQuery, useGetGenresQuery } from '../../../sevices/animeApi';
-import GridList from '../../../widgets/GridList/ui/GridList';
-
+import { useGetAgesQuery, useGetCatalogReleasesQuery, useGetCatalogSortQuery, useGetGenresQuery, useGetSeasonsQuery, useGetSoundsQuery, useGetStatusQuery, useGetTypesQuery } from '../../../sevices/animeApi';
 import styles from './Catalog.module.scss'
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { resetCatalog, setGenres, setPage, setSort } from '../../../features/catalog/catalogSlice';
-import Pagination from '../../../shared/ui/Pagination';
+import { useEffect, useRef, useState } from 'react';
+import { resetCatalog, setAges, setGenres, setPage, setSeasons, setSort, setSounds, setStatus, setType } from '../../../features/catalog/catalogSlice';
 import useOutClick from '../../../widgets/Search/useOutClick';
 import Filters from './components/Filters/Filters';
+import CatalogList from './components/CatalogList/CatalogList';
+import FilterOpen from './../../../shared/images/filter-open.svg?react'
+import FilterClose from './../../../shared/images/filter-close.svg?react'
+import { setSearchText } from '../../../features/search/searchSlice';
+import Search from './components/Search/Search';
+import { useInView } from 'react-intersection-observer';
+import { useCatalog } from '../hooks/useCatalog';
 
 function Catalog() {
-    const { sortValue, page } = useSelector(state => state.catalog)
+    const { searchText } = useSelector(state => state.search)
+    const { sortValue, type, status, age, sound, season, page } = useSelector(state => state.catalog)
+    // const [ page, setPage ] = useState(1)
     const genresInput = useSelector(state => state.catalog.genres)
-    const { data, isFetching, isSuccess, isLoading } = useGetCatalogReleasesQuery({page, sortValue, genres: genresInput.map(e => e.id)})
+    const { data, isFetching, isSuccess, isLoading } = useGetCatalogReleasesQuery({page, sortValue, genres: genresInput.map(e => e.id), searchText, type, status, season, sound, age})
     const dataFavorites = useSelector(state => state.favorites.favorites)
-    const sort = useGetCatalogSortQuery()
-    const genres = useGetGenresQuery()
     const dispatch = useDispatch()
-    const totalPages = data?.meta.pagination.total_pages
-    const sortRef = useRef()
-    useOutClick(() => setIsOpenSort(false), sortRef)
-    const [ isOpenMobileFilter, setIsOpenMobileFilter ] = useState(false)
-
-    // console.log(data.meta.pagination.total_pages);
+    const [ isOpenFilter, setIsOpenFilter ] = useState(true)
+    const { ref, inView } = useInView({
+        threshold: 0.1,
+    })
+    const { onClickAge, onClickGenre, onClickReset,
+        onClickSeason, onClickSort, onClickSound,
+        onClickStatus, onClickType, 
+        sort, genres, types, statuses,
+        seasons, ages, soundes } = useCatalog()
 
     useEffect(() => {
+        window.scrollTo(0, 0)
+
         return () => {
             dispatch(resetCatalog())
+            dispatch(setSearchText(''))
         }
-    }, [sort.isSuccess])
-
-    const onClickSort = (value, label) => {
-        dispatch(setSort({text: label, value: value}))
-    }
-
-    const onClickPage = useCallback((page) => {
-        dispatch(setPage(page))
     }, [])
-
-    const onClickGenre = (genre) => {
-        dispatch(setGenres(genre))
-    }
 
     return ( 
             <>
                     <main className={`${styles.catalog} container`}>
-                        <div className={styles.catalogLeft}>
-                            <GridList 
+                        <div className={styles.catalogTop}>
+                            <Search setPage={setPage} />
+                            <div ref={ref} className={styles.filterButton} onClick={() => setIsOpenFilter(!isOpenFilter)}>
+                                {isOpenFilter ? <FilterClose /> : <FilterOpen />}
+                            </div>
+                        </div>
+                        <div className={styles.catalogCenter}>
+                            <CatalogList
+                                meta={data?.meta}
+                                data={data?.data} 
+                                isLoading={isLoading}
+                                isFetching={isFetching}
+                                isSuccess={isSuccess}
+                                dataFavorites={dataFavorites}
+                            />
+                            {isOpenFilter && 
+                                <div className={styles.rightBlock}>
+                                    <Filters
+                                        typesData={types.data}
+                                        genresData={genres.data}
+                                        sortData={sort.data}
+                                        onClickType={onClickType}
+                                        onClickGenre={onClickGenre}
+                                        onClickSort={onClickSort}
+                                        statusData={statuses.data}
+                                        onClickStatus={onClickStatus}
+                                        seasonData={seasons.data}
+                                        onClickSeason={onClickSeason}
+                                        soundData={soundes.data}
+                                        onClickSound={onClickSound}
+                                        ageData={ages.data}
+                                        onClickAge={onClickAge}
+                                    />
+
+                                    <button onClick={onClickReset} className={styles.buttonReset}>Сбросить</button>
+                                </div>
+                            }   
+                            {/* <GridList 
                                 data={data?.data} 
                                 isLoading={isLoading}
                                 isFetching={isFetching}
                                 isSuccess={isSuccess}
                                 dataFavorites={dataFavorites}
                                 count={32}
-                                />
+                                /> */}
                         </div>
                         <div className={styles.catalogBottom}>
-                            <Pagination 
-                                    totalPages={totalPages}
-                                    page={page} onClickPage={onClickPage}
-                                />
+                            {/* <Pagination 
+                                totalPages={totalPages}
+                                page={page} onClickPage={onClickPage}
+                            /> */}
                         </div>
-                        <div className={styles.rightBlock}>
-                            <div className={styles.filtersTitle} onClick={() => setIsOpenMobileFilter(!isOpenMobileFilter)}>
-                                Фильтры
-                            </div>
-                            <Filters 
-                                isOpenMobileFilter={isOpenMobileFilter}
-                                genresData={genres.data}
-                                sortData={sort.data}
-                                onClickGenre={onClickGenre}
-                                onClickSort={onClickSort}
-                             />
-                        </div>
+                        {/* <button onClick={() => setLimit(prev => prev + 3)}>Показать еще</button> */}
+                        {!inView && <button onClick={() => window.scrollTo(0, 0)} className={styles.up}>ВВЕРХ</button>}
                     </main>
                 
             </>

@@ -1,16 +1,12 @@
 import { useState } from 'react';
 import styles from './../Filters.module.scss'
+import { useSelector } from 'react-redux';
 
 function FilterGenreItem({ onClickItem, item }) {
-    const [isActive, setIsActive] = useState(false)
-
-    const onClick = (item) => {
-        onClickItem(item)
-        setIsActive(!isActive)
-    }
+    const genres = useSelector(state => state.catalog.genres)
 
     return ( 
-        <li onClick={() => onClick(item)} key={item.id} className={isActive ? styles.filterItemActive : styles.filterItem}>{item.name}{item.label}</li>
+        <li onClick={() => onClickItem(item)} key={item.id} className={genres.find(genre => genre.id === item.id) ? styles.filterItemActive : styles.filterItem}>{item.name}{item.label}</li>
      );
 }
 

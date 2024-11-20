@@ -44,7 +44,7 @@ function Favorites({ data, isFetching }) {
                         Избранное
                     </h2>
                     
-                    {!isFetching ? (
+                    {isFetching ? (
                         <div className={styles.favoritesCards}>
                             {data.slice(0,8).map(e => (
                                 <div className={styles.favoritesCard} key={e.id}>

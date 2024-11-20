@@ -6,6 +6,8 @@ import { animeApi } from '../sevices/animeApi'
 import favoriteReducer from '../features/favorites/favoriteSlice'
 import searchReducer from '../features/search/searchSlice'
 import catalogReducer from '../features/catalog/catalogSlice'
+import titleReducer from '../features/title/titleSlice'
+import playerReducer from '../features/player/playerSlice'
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +15,8 @@ export const store = configureStore({
     favorites: favoriteReducer,
     search: searchReducer,
     catalog: catalogReducer,
+    title: titleReducer,
+    player: playerReducer,
     [authApi.reducerPath]: authApi.reducer,
     [animeApi.reducerPath]: animeApi.reducer,
   },

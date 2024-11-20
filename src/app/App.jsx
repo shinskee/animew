@@ -7,6 +7,7 @@ const TitlePage = lazy(() => import('../pages/TitlePage'))
 const Catalog = lazy(() => import('../pages/Catalog'))
 const SearchList = lazy(() => import('../pages/Home/components/SearchList/SearchList'))
 const FavoritesPage = lazy(() => import('../pages/FavoritesPage'))
+const Player = lazy(() => import('../pages/TitlePage/ui/component/Player/Player'))
 
 const routes = ([
   {
@@ -19,7 +20,7 @@ const routes = ([
       },
       {
         path: '/title/:id',
-        element: <TitlePage /> 
+        element: <TitlePage />,
       },
       {
         path: '/favorites',
@@ -33,16 +34,18 @@ const routes = ([
         path: '/catalog',
         element: <Catalog />
       },
+      {
+        path: '/player/:id/:episode',
+        element: <Player />
+      }
     ]
   }
 ])
 const router = createBrowserRouter(routes, {
-  basename: '/animew-only-react-not-lib/'
+  basename: '/animew-only-react-not-lib/',
 })
 
 function App() {
-  authenticate()
-  
   return (
       <RouterProvider router={router} />
   )

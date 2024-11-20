@@ -1,0 +1,49 @@
+@import './../../../../shared/styles/media';
+@import './../../../../shared/styles/mixins';
+
+.sceletonTitleList {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        height: 100%;
+        width: 100%;
+    
+        @include tablet {
+            grid-template-columns: repeat(3, 2fr);
+        }
+    
+        @include mobile {
+            grid-template-columns: repeat(2, 3fr);
+        }
+    
+        .card {
+            padding: 10px;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            column-gap: 15px;
+            
+            .img {
+                animation: wave 1s linear infinite alternate;
+                border-radius: 10px;
+                width: 250px;
+                aspect-ratio: 5889160200228700/8412231522718843;
+            }
+
+            .description {
+                animation: wave 1s linear infinite alternate;
+                border-radius: 10px;
+                display: flex;
+                width: 100%;
+            }
+        }
+}
+
+@keyframes wave {
+    0% {
+        background-color: var(--bg-3);
+    }
+    100% {
+        background-color: var(--bg-second);
+    }
+}

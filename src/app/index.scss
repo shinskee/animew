@@ -6,7 +6,17 @@
 @import '/src/shared/styles/utils';
 
 :root {
+  --carousel: 4;
   font-family: var(--font-family-base);
+  scroll-behavior: smooth;
+
+  @include tablet {
+    --carousel: 6;
+  }
+
+  @include tablet {
+    --carousel: 13;
+  }
 }
 
 body {
@@ -14,23 +24,7 @@ body {
 
   background: var(--bg);
 
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--bg-second);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--bg-3);
-    border-radius: 10px;
-    border: 1px solid var(--bg-3);
-
-    @include hover {
-      background-color: var(--bg-4);
-    }
-  }
+  @include custom-scroll;
 }
 
 main {
@@ -63,7 +57,14 @@ input {
   border: transparent;
 }
 
-ul {
+ul, h1, ol {
   padding: 0;
   margin: 0;
+}
+
+.slick-list {
+  margin: 0 -5px;
+}
+.slick-slide>div {
+  padding: 0 5px;
 }

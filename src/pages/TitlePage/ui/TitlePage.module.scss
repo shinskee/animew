@@ -7,84 +7,103 @@
     row-gap: 50px;
     align-items: start;
 
-    .leftBlock {
+    .main {
         display: flex;
-        row-gap: 20px;
         flex-direction: column;
-    }
-    // .rightBlock {
-    //     background-color: var(--second-light);
-    // }
+        row-gap: 20px;
 
-    .titleBlock {
-        position: relative;
-        border-radius: 20px;
-        padding: 20px;
-        border: 1px solid var(--primary-second);
-        display: flex;
-        column-gap: 20px;
+        @include tablet {
+            
+        }
 
-        @include mobile {
+        .topBlock {
+            display: flex;
+            column-gap: 20px;
+
+            @include mobile {
+                flex-direction: column;
+                row-gap: 10px;
+            }
+        }
+
+        .info {
+            display: flex;
             flex-direction: column;
-            row-gap: 20px;
+            row-gap: 10px;
+
+            @include tablet {
+                
+            }
+        }
+
+        .poster {
+            max-width: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+
+            @include tablet {
+            
+            }
+
+            img {
+                width: 100%;
+            }
+        }
+
+        .description {
+
+            p {
+                color: var(--dark-6);
+                line-height: 1.5;
+            }
+
+            @include tablet {
+                
+            }
         }
 
         .titleEn {
-            margin-bottom: 5px;
-            color: gray;
+            color: var(--dark-5);
         }
 
-        .descrBlock {
-            margin-top: 10px;
-            // display: flex;
-            align-items: center;
-            column-gap: 7px;
+        .infoBlock {
+
+            p {
+                color: var(--dark-6);
+            }
 
             span {
-                font-weight: 400;
+                color: var(--light);
             }
-        }
-    }
-
-    img {
-        border-radius: 10px;
-        height: 300px;
-        filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.3));
-
-        @include mobile {
-            width: 210px;
         }
     }
 
     .buttonFavorite,
     .buttonUnFavorite {
         @include reset-button;
-
-        bottom: -16px;
-        position: absolute;
         cursor: pointer;
-        width: 220px;
-        padding-inline: 10px;
-        height: 32px;
-        border-radius: 7px;
-        transition: all 0.2s;
+        padding-inline: 20px;
+        height: var(--button-height);
+        border-radius: var(--border-radius);
+        transition: var(--transition);
     }
 
     .buttonUnFavorite {
-        border: 1px solid var(--primary-second);
-        background-color: white;
+        border: 1px solid var(--primary);
+        // background-color: var(--primary);
+        color: var(--light);
 
         @include hover {
-            background-color: var(--primary);
+            opacity: 0.8;
         }
     }
 
     .buttonFavorite {
-        background-color: rgb(212, 12, 12);
-        color: white;
+        background-color: var(--primary-second);
+        color: var(--dark);
 
         @include hover {
-            background-color: rgb(181, 13, 13);
+            opacity: 0.8;
         }
     }
 }
@@ -93,7 +112,6 @@
     padding-top: 30px;
     position: relative;
     // background-color: var(--second-light);
-    border: 1px solid var(--primary-second);
     width: 100%;
     display: flex;
     flex-direction: column;

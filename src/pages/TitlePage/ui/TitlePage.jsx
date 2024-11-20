@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReactPlayer from "react-player";
-
 import styles from './TitlePage.module.scss'
 import { useGetTitleQuery } from "../../../sevices/animeApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useFavorite from "../../../shared/helpers/useFavorite";
+import EpisodesList from "./component/Episodes/EpisodesList";
+import Loader from "../../../shared/ui/Loader/Loader";
 
 function TitlePage() {
     const {id} = useParams()
     const { favorites, isChanging } = useSelector(state => state.favorites)
-    const {data, isLoading, isError } = useGetTitleQuery(id)
-    const [video, setVideo] = useState(1)
-    const [quality, setQuality] = useState('hd')
+    const {data, isLoading, isError, isSuccess } = useGetTitleQuery(id)
     const [isFavorite, setIsFavorite] = useState(false)
     const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
-    const qualityArr = ['hd', 'fhd', 'sd']
+
+    useEffect(() => {
+        if (isSuccess) {
+            document.title = data?.name?.main
+        }
+    }, [isSuccess])
     
     useEffect(() => {        
         favorites.map(e => {
@@ -29,49 +32,54 @@ function TitlePage() {
         }
     }, [isChanging])
 
-    if (isLoading) return <div>...Загрузка</div>
+    if (isLoading) return <Loader />
     if (isError) return <div>Ошибка, попробуйте позже</div>
     
     return ( 
         <main className={`${styles.titlePage} container`}>
             {data ? (
-                <div className={styles.titleBlock}>
-                    <div className={styles.leftBlock}>
-                        <img src={`https://anilibria.top${data.posters.small.url}`} alt="" />
-                        <button 
-                            className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }
-                            onClick={isFavorite ? () => onClickDeleteFavorite(data.id) : () => onClickAddFavorite(data.id, data)}>
-                                {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
-                        </button>
+                <div className={styles.main}>
+                    <div className={styles.topBlock}>
+                        <div className={styles.poster}>
+                            <img src={`https://anilibria.top${data.poster.src}`} alt="" />
+                        </div>
+                        <div className={styles.info}>
+                            <p className={styles.titleEn}>{data.name.english}</p>
+                            <h2 className={styles.title}>{data.name.main}</h2>
+                            <div className={styles.infoBlock}>
+                                <p>Жанры : <span>{data.genres.map(genre => (
+                                    <span key={genre.id}> {genre.name}</span>
+                                ))}</span></p>
+                            </div>
+                            <div className={styles.infoBlock}>
+                                <p>Год : <span>{data.year}</span></p>
+                            </div>
+                            <div className={styles.infoBlock}>
+                                <p>Сезон : <span>{data.season.description}</span></p>
+                            </div>
+                            <div className={styles.infoBlock}>
+                                <p>Статус : <span>{!data.is_in_production ? "Завершен" : "Выходит"}</span></p>
+                            </div>
+                            <div className={styles.infoBlock}>
+                                <p>Тип : <span>{data.type.description}</span></p>
+                            </div>
+                            <button 
+                                className={isFavorite ? styles.buttonFavorite : styles.buttonUnFavorite }
+                                onClick={isFavorite ? () => onClickDeleteFavorite(data.id) : () => onClickAddFavorite(data.id, data)}>
+                                    {isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
+                            </button>
+                        </div>
                     </div>
-                    <div className={styles.rightBlock}>
-                        <p className={styles.titleEn}>{data.names.en}</p>
-                        <h2 className={styles.title}>{data.names.ru}</h2>
-                        <div className={styles.descrBlock}>
-                            <h5>Описание : <span>{data.description}</span></h5>
-                        </div>
-                        <div className={styles.descrBlock}>
-                            <h5>Жанры : <span>{data.genres.join(', ')}</span></h5>
-                        </div>
-                        <div className={styles.descrBlock}>
-                            <h5>Год : <span>{data.season.year}</span></h5>
-                        </div>
-                        <div className={styles.descrBlock}>
-                            <h5>Сезон : <span>{data.season.string}</span></h5>
-                        </div>
-                        <div className={styles.descrBlock}>
-                            <h5>Статус : <span>{data.status.string}</span></h5>
-                        </div>
-                        <div className={styles.descrBlock}>
-                            <h5>Тип : <span>{data.type.full_string}</span></h5>
-                        </div>
+                    <div className={styles.description}>
+                        <p>{data.description}</p>
                     </div>
                 </div>
             ) : (
-                <div>...Загрузка</div>
+                <Loader />
             )}
             <section className={`${styles.playerWrapper}`}>
-                <div className={styles.selectWrapper}>
+                <EpisodesList />
+                {/* <div className={styles.selectWrapper}>
                     <select className={styles.select} name="series" id="series" onChange={(e) => {setVideo(e.target.value)}}>
                         {Object.entries(data?.player.list).map(e => (
                                 <option key={e[0]} value={e[0]}>{e[0]}. {e[1].name}</option>
@@ -82,8 +90,8 @@ function TitlePage() {
                             <option key={e} value={e}>{e}</option>
                         ))}
                     </select>
-                </div>
-                <ReactPlayer className={styles.player} style={{marginInline: 'auto'}} width={'97%'} height={'100%'} controls url={`https://cache.libria.fun${data.player.list[video].hls[quality]}`} />
+                </div> */}
+                {/* <ReactPlayer className={styles.player} style={{marginInline: 'auto'}} width={'97%'} height={'100%'} controls url={`https://cache.libria.fun${data.player.list[video].hls[quality]}`} /> */}
             </section>
         </main>
      );

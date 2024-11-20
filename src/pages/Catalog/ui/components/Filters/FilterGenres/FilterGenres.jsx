@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import styles from './../Filters.module.scss'
 import { useState } from 'react';
 import FilterGenreItem from './FilterGenreItem';
+import FilterTitle from '../FilterTitle';
 
 function FilterGenres({ type, onClickGenre, data, placeholder }) {
     const genresInput = useSelector(state => state.catalog.genres)
@@ -18,9 +19,10 @@ function FilterGenres({ type, onClickGenre, data, placeholder }) {
 
     return ( 
         <div className={styles.filter}>
-            <div className={styles.filterTitle} >
-                {type}
-            </div>
+            <FilterTitle 
+                title={type}
+                description={"Укажите жанры, по которым будут отфильтрованы все наши релизы. При выборе нескольких — будет использована комбинация"}
+            />
             <div className={styles.filterContent}>
                 <div onClick={onClickAnimation} className={isClick ? `${styles.filterActive} ${styles.clickAnimation}`: styles.filterActive}>
                     {genresInput.length >= 1 ? (

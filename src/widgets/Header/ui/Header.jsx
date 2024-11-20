@@ -19,7 +19,7 @@ function Header() {
                 <NavLink 
                     to="/catalog" 
                     className={({isActive}) => 
-                        isActive ? styles.catalogActive : styles.catalog}
+                        isActive ? `${styles.active} ${styles.catalog}` : styles.catalog}
                 >
                     Каталог
                 </NavLink>

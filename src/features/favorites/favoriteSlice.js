@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   favorites: [],
-  isChanging: false
+  isChanging: false,
+  isFavoritesSet: false,
 }
 
 export const favoriteSlice = createSlice({
@@ -11,6 +12,7 @@ export const favoriteSlice = createSlice({
   reducers: {
     setFavorites: (state, action) => {
         state.favorites = action.payload,
+        state.isFavoritesSet = true, 
         state.isChanging = !state.isChanging
     },
     resetFavorite: (state) => {

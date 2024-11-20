@@ -1,0 +1,294 @@
+@import './../../../../shared/styles/media';
+@import './../../../../shared/styles/mixins';
+
+.popularWrapper {
+    .popular {
+        background-color: var(--dark-second);
+        border-radius: var(--border-radius);
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        column-gap: 20px;
+        padding: 10px;
+
+        @include tablet {
+            grid-template-columns: 1fr;
+            row-gap: 20px;
+        }
+
+        .heroImg {
+            // width: 200px;
+
+            img {
+                width: 100%;
+                border-radius: var(--border-radius);
+            }
+        }
+
+        .info {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            row-gap: 10px;
+
+            .lastEpisode {
+                position: relative;
+                padding-bottom: 20px;
+                border-bottom: 1px solid var(--dark-5);
+                
+                .lastEpisodeInfo {
+                    display: flex;
+
+                    .episode {
+                        top: 40%;
+                        left: 100px;
+                        position: absolute;
+                        span {
+                            font-size: 30px;
+                        }
+                    }
+                }
+
+                img {
+                    max-width: 300px;
+                    width: 100%;
+                    opacity: 0.5;
+                }
+            }
+
+            .description {
+                color: var(--second-light);
+            }
+
+            .infoList {
+                display: flex;
+                column-gap: 40px;
+                color: var(--dark-6);
+                flex-wrap: wrap;
+
+                li {
+                    &:first-child {
+                        list-style: none;
+                    }
+                }
+            }
+
+            button {
+                @include reset-button;  
+
+                cursor: pointer;
+                height: var(--button-height);
+                background-color: var(--bg-4);
+                border-radius: var(--border-radius);
+                align-self: start;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                column-gap: 5px;
+                padding: 0 20px;
+                transition: var(--transition);
+
+                @include hover {
+                    opacity: 0.8;
+                }
+
+                svg {
+                    width: 20px;
+                    height: 20px;
+
+                    path {
+                        stroke: var(--light);
+                    }
+                }
+            }
+        }
+    }
+}
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .buttons {
+        display: flex;
+    }
+}
+.swiperWrapper {
+    .swiper {
+        background-color: var(--dark-second);
+        border-radius: var(--border-radius);
+        list-style-type: none; 
+	    counter-reset: num;
+
+        .swiperCard {
+            padding: 10px;
+            display: flex !important;
+            column-gap: 20px;
+            width: unset !important;
+
+            @include tablet {
+                flex-direction: column;
+                row-gap: 20px;
+            }
+
+            &::before {
+                content: counter(num); 
+                color: var(--primary);
+	            counter-increment: num;
+                bottom: calc(anchor(bottom) - 40px);
+                right: anchor(right);
+                position: absolute;
+                position-anchor: --image;
+                font-size: 220px;
+                filter: drop-shadow(5px 0 5px var(--dark-second));
+                font-weight: bold;
+            }
+
+            .favorite {
+                display: flex;
+                align-items: center;
+                column-gap: 10px;
+
+                svg {
+                    width: 25px;
+                    height: 25px;
+                    
+                    path {
+                        fill: var(--primary);
+                    }
+                }
+            }
+
+            .img {
+                // min-width: 250px;
+                width: 250px;
+
+                img {
+                    anchor-name: --image;
+                    width: 250px;
+                    border-radius: var(--border-radius);
+                }
+            }
+        }
+    }
+}
+
+button {
+    @include reset-button;  
+
+    cursor: pointer;
+    height: var(--button-height);
+    background-color: var(--bg-4);
+    border-radius: var(--border-radius);
+    align-self: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+    padding: 0 20px;
+    transition: var(--transition);
+
+    @include hover {
+        opacity: 0.8;
+    }
+
+    svg {
+        width: 20px;
+        height: 20px;
+
+        path {
+            stroke: var(--light);
+        }
+    }
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 10px;
+
+    .lastEpisode {
+        position: relative;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--dark-5);
+        
+        .lastEpisodeInfo {
+            display: flex;
+
+            .episode {
+                top: 40%;
+                left: 100px;
+                position: absolute;
+                span {
+                    font-size: 30px;
+                }
+            }
+        }
+
+        img {
+            max-width: 300px;
+            width: 100%;
+            opacity: 0.5;
+        }
+    }
+
+    .description {
+        color: var(--second-light);
+        display: -webkit-box;   
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
+    }
+
+    .infoList {
+        display: flex;
+        column-gap: 5px;
+        color: var(--dark-6);
+        flex-wrap: wrap;
+        list-style-type: none; 
+
+        li {
+            &::before {
+                content: '/'; 
+                padding-right: 5px;
+                display: inline-block;
+            }
+
+            &:first-child {
+                &::before {
+                    content: ''; 
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+
+    button {
+        @include reset-button;  
+
+        cursor: pointer;
+        height: var(--button-height);
+        background-color: var(--bg-4);
+        border-radius: var(--border-radius);
+        align-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 5px;
+        padding: 0 20px;
+        transition: var(--transition);
+
+        @include hover {
+            opacity: 0.8;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+
+            path {
+                stroke: var(--light);
+            }
+        }
+    }
+}

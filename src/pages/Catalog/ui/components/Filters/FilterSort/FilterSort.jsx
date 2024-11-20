@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import styles from './../Filters.module.scss'
 import { useState } from 'react';
 import FilterSortItem from './FilterSortItem';
+import FilterTitle from '../FilterTitle';
 
 function FilterSort({ type, onClickSort, data }) {
     const sortText = useSelector(state => state.catalog.sortText)
@@ -18,9 +19,10 @@ function FilterSort({ type, onClickSort, data }) {
 
     return ( 
         <div className={styles.filter}>
-            <div className={styles.filterTitle}>
-                {type}
-            </div>
+            <FilterTitle 
+                title={type}
+                description={"Укажите способ сортировки для отображения всех тайтлов в каталоге"}
+            />
             <div className={styles.filterContent}>
                 <div onClick={onClickAnimation} className={isClick ? `${styles.filterActive} ${styles.clickAnimation}`: styles.filterActive}>
                     {sortText}

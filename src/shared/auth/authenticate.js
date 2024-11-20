@@ -1,12 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyGetAuthQuery, useLazyGetMeQuery, useLazyLoginQuery } from "../../sevices/authApi";
-import { setLogout } from "../../features/auth/authSlice";
-import { useEffect } from "react";
+import { setAuth, setLogout } from "../../features/auth/authSlice";
+import { useEffect, useState } from "react";
 import { useLazyGetFavoritesQuery } from "../../sevices/animeApi";
 import { resetFavorite, setFavorites } from "../../features/favorites/favoriteSlice";
 
 function authenticate() {
     const isAuth = useSelector(state => state.auth.isAuth)
+    const [ isAuthLoading, setisAuthLoading ] = useState(true)
     const [ getMe, {error} ] = useLazyGetMeQuery()
     const [ getAuth ] = useLazyGetAuthQuery()
     const [ getLogin ] = useLazyLoginQuery()
@@ -16,20 +17,24 @@ function authenticate() {
     useEffect(() => {
         const getMyProfile = async () => {
             const responseMe = await getMe()
-
+                
                 if (responseMe.isSuccess) {
-                    
-                    
+
                     const getDataFavorites = async () => {
                         const response = await getFavorites()
                     
                             if (response.isSuccess) {
                                 dispatch(setFavorites(response.data.data))
+                                setisAuthLoading(false)
                             }
                         
                     }
                     getDataFavorites()
-                } 
+                }
+
+                if( responseMe.isError ) {
+                    setisAuthLoading(false)
+                }
             
         }
         getMyProfile()
@@ -57,7 +62,7 @@ function authenticate() {
     }
 
     return {
-        login, logout
+        login, logout, isAuthLoading
     }
 }
 

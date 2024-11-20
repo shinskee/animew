@@ -1,0 +1,116 @@
+@import './../../../../../shared/styles/media';
+@import './../../../../../shared/styles/mixins';
+
+.episodesList {
+    button {
+        margin-bottom: 20px;
+    }
+
+    .episode, 
+    .episodeActive {
+        cursor: pointer;
+        background-color: var(--dark-second);
+        border-radius: var(--border-radius);
+        padding: 10px;
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
+        border-bottom: 1px solid var(--bg-4);
+        transition: var(--transition);
+
+        @include hover {
+            opacity: 0.8;
+        }
+
+        .previewWrapper {
+            width: 100px;
+            aspect-ratio: 1;
+            background-color: var(--bg-3);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: end;
+            justify-content: end;
+
+            span {
+                background-color: var(--dark);
+                border-radius: var(--border-radius);
+                margin: 8px;
+                padding: 8px;
+            }
+        }
+
+        .number {
+
+        }
+
+
+        .name {
+            color: var(--dark-6);
+        }
+    }
+
+    .episode {
+        background-color: var(--dark-second);
+    }
+
+    .episodeActive {
+        background-color: var(--primary);
+    }
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    height: 50px;
+}
+
+.header {
+    z-index: 10;
+    width: 100%;
+    height: var(--button-height);
+    background-color: var(--dark);
+    position: sticky;
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+    top: 0;
+    padding-block: 10px;
+}
+
+.sortButton {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    transition: var(--transition);
+
+    path {
+        stroke: var(--light);
+    }
+
+    @include hover {
+        opacity: 0.8;
+    }
+}
+
+.search {
+    input {
+        @include fluid-text(16, 14);
+
+        background-color: var(--dark-second);
+        border-radius: var(--border-radius);
+        height: 48px;
+        width: -webkit-fill-available;
+        padding-inline: 10px;
+        font-weight: 600;
+        transition: var(--transition);
+
+        &:focus {
+            outline: transparent;
+            background-color: var(--bg-3);
+        }
+
+        @include hover {
+            background-color: var(--bg-3);
+        }
+    }
+}

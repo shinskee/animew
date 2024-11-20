@@ -16,6 +16,12 @@
 
     &:disabled {
         cursor: no-drop;
+
+        .leftArrow {
+            path {
+                opacity: 0.5;
+            }
+        }
     }
 
     @include hover {

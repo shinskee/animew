@@ -5,8 +5,9 @@ import favoriteOffIcon from './../../../shared/images/favorite-off.svg'
 import useFavorite from '../../../shared/helpers/useFavorite'
 
 import styles from './Carousel.module.scss'
+import { useState } from 'react'
 
-function Carousel({ isFetching, data, dataFavorites }) {
+function Carousel({ isFetching, data, dataFavorites, chunkSize }) {
     const navigate = useNavigate()
     const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
 
@@ -14,9 +15,9 @@ function Carousel({ isFetching, data, dataFavorites }) {
         <div className={styles.carousel}>
                 {!isFetching ? 
                     (<div className={styles.list}>
-                            {data && data.map(e => (
+                            {data && data.slice(chunkSize[0], chunkSize[1]).map(e => (
                                 <div key={e.id} className={styles.card} >
-                                    <img src={`https://anilibria.top${e.posters.small.url}`} alt="" onClick={() => navigate(`/title/${e.id}`)} />       
+                                    <img src={e.poster?.src ? `https://anilibria.top${e.poster?.src}` : `https://anilibria.top${e.posters?.small.url}`} alt="" onClick={() => navigate(`/title/${e.id}`)} />       
                                     {
                                         dataFavorites?.filter(v => v.id === e.id).length === 1 ? (
                                             <button onClick={() => onClickDeleteFavorite(e.id, e)}>

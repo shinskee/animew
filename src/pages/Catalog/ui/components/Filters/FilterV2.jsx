@@ -1,0 +1,87 @@
+import { useSelector } from "react-redux";
+import FilterGenreItem from "./FilterGenres/FilterGenreItem";
+import FilterTitle from "./FilterTitle";
+import styles from './Filters.module.scss'
+import { useState } from "react";
+import FilterSortItem from "./FilterSort/FilterSortItem";
+import FilterTypeItem from "./FilterTypes/FilterTypeItem";
+
+function FilterV2({ type, title, description, data, onClickItem, placeholder, value }) {
+    const genresInput = useSelector(state => state.catalog.genres)
+    const sortText = useSelector(state => state.catalog.sortText)
+    const [ isOpenFilter, setIsOpenFilter ] = useState(false)
+    const [isClick, setIsClick] = useState(false)
+
+    const onClickAnimation = () => {
+        setIsOpenFilter(!isOpenFilter)
+        setIsClick(true)
+        setTimeout(() => {
+            setIsClick(false)
+        }, 200);
+    }
+
+    if (type === 'drop-down-multiple')
+    return ( 
+        <div className={styles.filter}>
+            <FilterTitle 
+                title={title}
+                description={"Укажите жанры, по которым будут отфильтрованы все наши релизы. При выборе нескольких — будет использована комбинация"}
+            />
+            <div className={styles.filterContent}>
+                <div onClick={onClickAnimation} className={isClick ? `${styles.filterActive} ${styles.clickAnimation}`: styles.filterActive}>
+                    {genresInput.length >= 1 ? (
+                        genresInput.map((e, i) => (
+                            i === 0 || i === -1 ? e.name : ', ' + e.name
+                        ))
+                    ) : placeholder}
+                </div>
+                <ul className={isOpenFilter ? `${styles.filterList} ${styles.active}` : styles.filterList}>
+                    {data?.map(item => (
+                        <FilterGenreItem key={item.id} onClickItem={onClickItem} item={item} />
+                    ))}
+                </ul>
+            </div>
+        </div>
+     );
+
+     if (type === 'drop-down-once') 
+        return (
+            <div className={styles.filter}>
+            <FilterTitle 
+                title={title}
+                description={"Укажите способ сортировки для отображения всех тайтлов в каталоге"}
+            />
+            <div className={styles.filterContent}>
+                <div onClick={onClickAnimation} className={isClick ? `${styles.filterActive} ${styles.clickAnimation}`: styles.filterActive}>
+                    {sortText}
+                </div>
+                <ul className={isOpenFilter ? `${styles.filterList} ${styles.active}` : styles.filterList}>
+                    {data && (
+                        data.map(item => (
+                            <FilterSortItem key={item.value} sortText={sortText} item={item} onClickItem={onClickItem} />
+                        ))
+                    )}
+                </ul>
+            </div>
+        </div>
+    )
+
+    if (type === 'button') 
+        return (
+            <div className={styles.filter}>
+                <FilterTitle 
+                    title={title}
+                    description={description}
+                /> 
+                <div className={styles.filterContent}>
+                    <ul className={styles.filterItemList}>
+                        {data?.map(item => (
+                            <li key={item.value} onClick={() => onClickItem(item.value)} className={value === item.value ? styles.filterItemButtonActive : styles.filterItemButton}>{item.description}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        )
+}
+
+export default FilterV2;
