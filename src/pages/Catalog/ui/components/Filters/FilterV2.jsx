@@ -5,6 +5,7 @@ import styles from './Filters.module.scss'
 import { useState } from "react";
 import FilterSortItem from "./FilterSort/FilterSortItem";
 import FilterTypeItem from "./FilterTypes/FilterTypeItem";
+import { motion } from "motion/react";
 
 function FilterV2({ type, title, description, data, onClickItem, placeholder, value }) {
     const genresInput = useSelector(state => state.catalog.genres)
@@ -76,7 +77,9 @@ function FilterV2({ type, title, description, data, onClickItem, placeholder, va
                 <div className={styles.filterContent}>
                     <ul className={styles.filterItemList}>
                         {data?.map(item => (
-                            <li key={item.value} onClick={() => onClickItem(item.value)} className={value === item.value ? styles.filterItemButtonActive : styles.filterItemButton}>{item.description}</li>
+                            <motion.button onClick={() => onClickItem(item.value)} key={item.value} whileHover={{ opacity: 0.8 }} whileTap={{ scale: 0.9, rotate: 3 }} className={value === item.value ? styles.filterItemButtonActive : styles.filterItemButton}>
+                                <li>{item.description}</li>
+                            </motion.button>
                         ))}
                     </ul>
                 </div>

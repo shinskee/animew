@@ -1,3 +1,4 @@
+import transition from '../../../app/transition';
 import LoaderSvg from './../../images/loader.svg?react'
 import styles from './Loader.module.scss'
 
@@ -9,4 +10,4 @@ function Loader() {
      );
 }
 
-export default Loader;
+export default transition(Loader);

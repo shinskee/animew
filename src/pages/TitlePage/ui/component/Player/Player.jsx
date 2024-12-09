@@ -11,8 +11,9 @@ import PrevButton from "../../../../../shared/ui/PrevButton/ui/PrevButton";
 import NextButton from "../../../../../shared/ui/NextButton/ui/NextButton";
 import Play from '../../../../../shared/images/play.svg?react'
 import Pause from '../../../../../shared/images/pause.svg?react'
-import { setPause, setPlay, setPlayed, setPlayPause } from "../../../../../features/player/playerSlice";
+import { setPause, setPlay, setPlayed, setPlayPause, setUrl } from "../../../../../features/player/playerSlice";
 import Loader from "../../../../../shared/ui/Loader/Loader";
+import transition from "../../../../../app/transition";
 
 function Player() {
     const params = useParams()
@@ -32,6 +33,16 @@ function Player() {
             setIsShowEpisodes(false)
         }
     }, [])
+
+    useEffect(() => {
+        if (episode.isSuccess) {
+            dispatch(setUrl(episode.data.hls_720))
+        }
+
+        return () => {
+            dispatch(setUrl(''))
+        }
+    }, [params])
     
     const nextEpisode = () => {
         const nextEpisode = episodes.find(e => e.ordinal === episode.data.ordinal + 1)
@@ -90,4 +101,4 @@ function Player() {
      );
 }
 
-export default Player;
+export default transition(Player);

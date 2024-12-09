@@ -6,13 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import useFavorite from "../../../shared/helpers/useFavorite";
 import EpisodesList from "./component/Episodes/EpisodesList";
 import Loader from "../../../shared/ui/Loader/Loader";
+import transition from "../../../app/transition";
+import TostFavorite from "../../../shared/ui/TostFavorite/TostFavorite";
 
 function TitlePage() {
     const {id} = useParams()
     const { favorites, isChanging } = useSelector(state => state.favorites)
     const {data, isLoading, isError, isSuccess } = useGetTitleQuery(id)
     const [isFavorite, setIsFavorite] = useState(false)
-    const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
+    const { onClickAddFavorite, onClickDeleteFavorite, isFavoriteSuccess } = useFavorite()
+
+    useEffect(() => {
+        window.scrollTo(0,0)
+    }, [])
 
     useEffect(() => {
         if (isSuccess) {
@@ -39,6 +45,7 @@ function TitlePage() {
         <main className={`${styles.titlePage} container`}>
             {data ? (
                 <div className={styles.main}>
+                    {/* {isFavoriteSuccess && <TostFavorite>Добавлено в избранное</TostFavorite>} */}
                     <div className={styles.topBlock}>
                         <div className={styles.poster}>
                             <img src={`https://anilibria.top${data.poster.src}`} alt="" />
@@ -97,4 +104,4 @@ function TitlePage() {
      );
 }
 
-export default TitlePage;
+export default transition(TitlePage);

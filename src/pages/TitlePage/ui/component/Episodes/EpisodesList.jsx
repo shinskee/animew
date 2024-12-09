@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Loader from './../../../../../shared/images/loader.svg?react'
 import SortUp from './../../../../../shared/images/sort-up.svg?react'
 import SortDown from './../../../../../shared/images/sort-down.svg?react'
+import { setUrl } from '../../../../../features/player/playerSlice';
 
 function EpisodesList({ currentEpisode, isShowEpisodes }) {
     const { episodes, isSort } = useSelector(state => state.title)
@@ -40,10 +41,17 @@ function EpisodesList({ currentEpisode, isShowEpisodes }) {
     useEffect(() => {
         const Debounce = setTimeout(() => {
             setEpisodesFiltered(filterData(inputValue, episodes))
+            if (inputValue.length > 0) {
+                onClickUp()
+            }
         }, 300);
 
         return () => clearTimeout(Debounce)
     }, [inputValue])
+
+    useEffect(() => {
+        setEpisodesFiltered(sortData(isSort, episodesFiltered))
+    }, [isSort])
 
     function filterData(searchText, data) {
         if (!searchText) {
@@ -53,8 +61,17 @@ function EpisodesList({ currentEpisode, isShowEpisodes }) {
         return data.filter(v => v.ordinal.toString().includes(searchText))
     }
 
+    function sortData(isSort, data) {
+        if (!isSort) {
+            return [...data].sort((a, b) => b.ordinal - a.ordinal)
+        }
+    
+        return [...data].sort((a, b) => a.ordinal - b.ordinal)
+    }
+
     const onClickTitle = (episode) => {
-        dispatch(setEpisodeUrl(episode.hls_720))
+        // dispatch(setUrl(episode.hls_720))
+        // dispatch(setEpisodeUrl(episode.hls_720))
         navigate(`/player/${params.id}/${episode.id}`)
         setCurrentEp(episode.ordinal)
     }
@@ -83,7 +100,7 @@ function EpisodesList({ currentEpisode, isShowEpisodes }) {
                 <div className={styles.search}>
                     <input type="number" onChange={(e) => onChangeInput(e)} value={inputValue} />
                 </div>
-                <button onClick={onClickUp}>В начало</button>
+                {isShowEpisodes && <button onClick={onClickUp}>В начало</button>}
             </div>
             {episodesFiltered?.slice(chunk[0], chunk[1]).map((e, i) =>
             (

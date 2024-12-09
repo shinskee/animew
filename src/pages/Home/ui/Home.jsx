@@ -7,6 +7,8 @@ import Hero from "../components/Hero/Hero";
 import Popular from "../components/Popular/Popular";
 import Genres from "../components/Genres/Genres";
 import Loader from "../../../shared/ui/Loader/Loader";
+import ButtonScrollTop from "../../../shared/ui/ButtonScrollTop/ButtonScrollTop";
+import transition from "../../../app/transition";
 
 function Home() {
     const [page, setPage] = useState(1)
@@ -41,8 +43,9 @@ function Home() {
             }
             <Hero data={updates?.data} isLoading={updates.isLoading} isError={updates.isError} />
             <Genres data={genres?.data} isLoading={genres.isLoading} isError={genres.isError} />
+            {/* <ButtonScrollTop /> */}
         </main>
      );
 }
 
-export default Home;
+export default transition(Home);

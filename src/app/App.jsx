@@ -1,7 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Layout/Layout'
 import Home from '../pages/Home'
-import authenticate from '../shared/auth/authenticate'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { lazy } from 'react'
 const TitlePage = lazy(() => import('../pages/TitlePage'))
 const Catalog = lazy(() => import('../pages/Catalog'))

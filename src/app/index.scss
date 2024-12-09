@@ -35,7 +35,7 @@ h2 {
   @include fluid-text(24, 18);
 
   margin: 0;
-  margin-bottom: 20px;
+  padding: 0;
 }
 
 h5, p {
@@ -45,7 +45,11 @@ h5, p {
 }
 
 section {
-  padding-block: 20px;
+  padding-block: 40px;
+
+  @include tablet {
+    padding-block: 20px;
+  }
 }
 
 button, body, h1, h2, h5, p, a, input {
@@ -57,9 +61,13 @@ input {
   border: transparent;
 }
 
-ul, h1, ol {
+ul, h1, h2, ol {
   padding: 0;
   margin: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .slick-list {

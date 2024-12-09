@@ -30,6 +30,8 @@
     }
 
     .episodes {
+        animation-name: show;
+        animation-duration: 1s;
         top: 0;
         left: 0;
         z-index: 2;
@@ -40,6 +42,15 @@
         padding: 20px;
 
         @include custom-scroll;
+    }
+
+    @keyframes show {
+        0% {
+            transform: translate(-100%);
+        }
+        100% {
+            transform: translate(0);
+        }
     }
 }
 

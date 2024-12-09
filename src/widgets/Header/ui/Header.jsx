@@ -2,13 +2,20 @@ import { NavLink } from 'react-router-dom'
 import logo from './../../../shared/images/logo.jpeg'
 import Login from '../../../shared/auth/Login';
 import Search from '../../Search';
+import { useInView } from 'react-intersection-observer';
+import ButtonScrollTop from '../../../shared/ui/ButtonScrollTop/ButtonScrollTop';
 
 import styles from './Header.module.scss'
 
 
 function Header() {
+    const {ref, inView} = useInView({
+        threshold: 1
+    })
+
     return ( 
-        <header className={`${styles.headerWrapper}`}>
+        <header ref={ref} className={`${styles.headerWrapper}`}>
+            <ButtonScrollTop inView={inView} />
             <div className={`${styles.header} container`}>
                 <NavLink to={'/'} className={styles.logo}>
                     <img src={logo} alt="" width={50} />

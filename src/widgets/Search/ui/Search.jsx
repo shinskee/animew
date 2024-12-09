@@ -40,6 +40,11 @@ function Search() {
             // dispatch(setSearchText(inputRef.current.value))
         setIsInput(!isInput)
         !isInput && inputRef.current.focus()
+
+        if (isInput) {
+            setIsButtonResetActive(false)
+            dispatch(setInputText(''))
+        }
     }
 
     const onClickReset = () => {
@@ -57,16 +62,18 @@ function Search() {
 
     return ( 
         <div className={styles.search}>
-                    <input 
-                        ref={inputRef} onKeyDown={onKeyDownEnter} onClick={onClickInput} 
-                        className={isInput ? styles.inputActive : styles.input} type="text" placeholder="Введите название" 
-                        onChange={(e) => dispatch(setInputText(e.target.value)) } value={inputText} 
-                    />
-                {isButtonResetActive && (
-                    <button className={styles.buttonReset} onClick={onClickReset}>
-                        <img src={resetInputIcon} alt="" width={20} />
-                    </button>
-                )}
+                    <div className={styles.searchWrapper}>
+                        <input 
+                            ref={inputRef} onKeyDown={onKeyDownEnter} onClick={onClickInput} 
+                            className={isInput ? styles.inputActive : styles.input} type="text" placeholder="Введите название" 
+                            onChange={(e) => dispatch(setInputText(e.target.value)) } value={inputText} 
+                        />
+                    {isButtonResetActive && (
+                        <button className={styles.buttonReset} onClick={onClickReset}>
+                            <img src={resetInputIcon} alt="" width={20} />
+                        </button>
+                    )}
+                    </div>
                 <button className={styles.buttonSearch} onClick={onClick} >
                     <SearchIcon className={styles.searchIcon} />
                 </button>

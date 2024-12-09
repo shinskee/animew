@@ -2,6 +2,8 @@
 @import './../../../../shared/styles/mixins';
 
 .popularWrapper {
+    // counter-reset: num;
+
     .popular {
         background-color: var(--dark-second);
         border-radius: var(--border-radius);
@@ -119,56 +121,6 @@
         list-style-type: none; 
 	    counter-reset: num;
 
-        .swiperCard {
-            padding: 10px;
-            display: flex !important;
-            column-gap: 20px;
-            width: unset !important;
-
-            @include tablet {
-                flex-direction: column;
-                row-gap: 20px;
-            }
-
-            &::before {
-                content: counter(num); 
-                color: var(--primary);
-	            counter-increment: num;
-                bottom: calc(anchor(bottom) - 40px);
-                right: anchor(right);
-                position: absolute;
-                position-anchor: --image;
-                font-size: 220px;
-                filter: drop-shadow(5px 0 5px var(--dark-second));
-                font-weight: bold;
-            }
-
-            .favorite {
-                display: flex;
-                align-items: center;
-                column-gap: 10px;
-
-                svg {
-                    width: 25px;
-                    height: 25px;
-                    
-                    path {
-                        fill: var(--primary);
-                    }
-                }
-            }
-
-            .img {
-                // min-width: 250px;
-                width: 250px;
-
-                img {
-                    anchor-name: --image;
-                    width: 250px;
-                    border-radius: var(--border-radius);
-                }
-            }
-        }
     }
 }
 
@@ -289,6 +241,64 @@ button {
             path {
                 stroke: var(--light);
             }
+        }
+    }
+}
+
+.swiperCard {
+    // padding: 10px;
+    display: flex !important;
+    column-gap: 20px;
+    width: unset !important;
+    // counter-increment: num;
+
+    @include tablet {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+
+    .favorite {
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+
+        svg {
+            width: 25px;
+            height: 25px;
+            
+            path {
+                fill: var(--primary);
+            }
+        }
+    }
+
+    .img {
+        cursor: pointer;
+        position: relative;
+        // min-width: 250px;
+        width: 250px;
+        transition: var(--transition);
+
+        @include hover {
+            scale: 1.01;
+        }
+
+        img {
+            width: 250px;
+            border-radius: var(--border-radius);
+        }
+
+        span {
+            content: counter(num); 
+            color: var(--primary);
+            counter-increment: num;
+            bottom: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            position: absolute;
+            font-size: 220px;
+            filter: drop-shadow(5px 0 5px var(--dark-second));
+            font-weight: bold;
         }
     }
 }

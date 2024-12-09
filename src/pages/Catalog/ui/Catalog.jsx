@@ -12,6 +12,7 @@ import { setSearchText } from '../../../features/search/searchSlice';
 import Search from './components/Search/Search';
 import { useInView } from 'react-intersection-observer';
 import { useCatalog } from '../hooks/useCatalog';
+import transition from '../../../app/transition';
 
 function Catalog() {
     const { searchText } = useSelector(state => state.search)
@@ -41,8 +42,7 @@ function Catalog() {
     }, [])
 
     return ( 
-            <>
-                    <main className={`${styles.catalog} container`}>
+        <main className={`${styles.catalog} container`}>
                         <div className={styles.catalogTop}>
                             <Search setPage={setPage} />
                             <div ref={ref} className={styles.filterButton} onClick={() => setIsOpenFilter(!isOpenFilter)}>
@@ -77,7 +77,12 @@ function Catalog() {
                                         onClickAge={onClickAge}
                                     />
 
-                                    <button onClick={onClickReset} className={styles.buttonReset}>Сбросить</button>
+                                    {
+                                        age !== '' || season !== '' || sound !== '' || status !== '' 
+                                        || type !== '' || genresInput.length !== 0 || sortValue !== 'FRESH_AT_DESC' 
+                                        ? <button onClick={onClickReset} className={styles.buttonReset}>Сбросить</button> 
+                                        : null
+                                    }
                                 </div>
                             }   
                             {/* <GridList 
@@ -96,10 +101,8 @@ function Catalog() {
                             /> */}
                         </div>
                         {/* <button onClick={() => setLimit(prev => prev + 3)}>Показать еще</button> */}
-                        {!inView && <button onClick={() => window.scrollTo(0, 0)} className={styles.up}>ВВЕРХ</button>}
-                    </main>
-                
-            </>
+                        {/* {!inView && <button onClick={() => window.scrollTo(0, 0)} className={styles.up}>ВВЕРХ</button>} */}
+        </main> 
 )
 }
-export default Catalog;
+export default transition(Catalog);

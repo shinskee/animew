@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { setFavorites } from "../../../features/favorites/favoriteSlice";
 import { useNavigate } from "react-router-dom";
+import transition from "../../../app/transition";
 
 function FavoritesPage() {
     const isAuth = useSelector(state => state.auth.isAuth)
@@ -45,4 +46,4 @@ function FavoritesPage() {
      );
 }
 
-export default FavoritesPage;
+export default transition(FavoritesPage);
