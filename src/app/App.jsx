@@ -43,7 +43,7 @@ const routes = ([
   }
 ])
 const router = createBrowserRouter(routes, {
-  basename: '/animew-only-react-not-lib/',
+  basename: '/animew/',
 })
 
 function App() {
