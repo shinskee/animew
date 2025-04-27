@@ -1,13 +1,13 @@
-import transition from '../../../app/transition';
+import { memo } from 'react';
 import LoaderSvg from './../../images/loader.svg?react'
 import styles from './Loader.module.scss'
 
-function Loader() {
+const Loader = memo(() => {
     return ( 
         <div className={styles.loader}>
             <LoaderSvg />
         </div>
      );
-}
+})
 
-export default transition(Loader);
+export default Loader;

@@ -1,5 +1,4 @@
-@import './../../../shared/styles/media';
-@import './../../../shared/styles/mixins';
+@use '@shared/styles/helpers/index' as *;
 
 .search {
     right: 0;

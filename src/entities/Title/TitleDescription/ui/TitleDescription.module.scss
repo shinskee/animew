@@ -1,0 +1,51 @@
+@use '@shared/styles/helpers/index' as *;
+
+.titleDescription {
+  display: grid;
+  grid-template-columns: 250px auto;
+  column-gap: 20px;
+
+  @include mobile {
+    grid-template-columns: auto;
+    row-gap: 20px;
+  }
+}
+
+.poster {
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+
+  .nameEng {
+    color: var(--dark-6);
+  }
+}
+
+.infoItemList {
+  display: flex;
+  column-gap: 10px;
+}
+
+.infoList {
+  .infoItem {
+    display: flex;
+    column-gap: 10px;
+
+    .key {
+      color: var(--dark-6);
+    }
+
+    .value {
+      color: var(--light);
+    }
+  }
+}

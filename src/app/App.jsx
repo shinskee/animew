@@ -1,14 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from './Layout/Layout'
+import Layout from './Layout/'
 import Home from '../pages/Home'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { lazy } from 'react'
+import Providers from './providers';
+import EpisodePage from '../pages/EpisodePage/ui/EpisodePage';
 const TitlePage = lazy(() => import('../pages/TitlePage'))
-const Catalog = lazy(() => import('../pages/Catalog'))
-const SearchList = lazy(() => import('../pages/Home/components/SearchList/SearchList'))
+// const Catalog = lazy(() => import('../pages/Catalog'))
+// const SearchList = lazy(() => import('../pages/Home/components/SearchList/SearchList'))
 const FavoritesPage = lazy(() => import('../pages/FavoritesPage'))
-const Player = lazy(() => import('../pages/TitlePage/ui/component/Player/Player'))
+// const Player = lazy(() => import('../pages/TitlePage/ui/component/Player/Player'))
 
 const routes = ([
   {
@@ -28,17 +30,17 @@ const routes = ([
         element: <FavoritesPage /> 
       },
       {
-        path: '/search',
-        element: <SearchList /> 
+        path: '/title/:id/episode/:number',
+        element: <EpisodePage />
       },
-      {
-        path: '/catalog',
-        element: <Catalog />
-      },
-      {
-        path: '/player/:id/:episode',
-        element: <Player />
-      }
+      // {
+      //   path: '/catalog',
+      //   element: <Catalog />
+      // },
+      // {
+      //   path: '/player/:id/:episode',
+      //   element: <Player />
+      // }
     ]
   }
 ])
@@ -48,7 +50,9 @@ const router = createBrowserRouter(routes, {
 
 function App() {
   return (
-      <RouterProvider router={router} />
+      <Providers>
+        <RouterProvider router={router} />
+      </Providers>
   )
 }
 

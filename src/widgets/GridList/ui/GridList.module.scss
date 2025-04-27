@@ -1,80 +1,33 @@
-@import './../../../shared/styles/media';
-@import './../../../shared/styles/mixins';
-
-@keyframes wave {
-    0% {
-        background-color: var(--bg-3);
-    }
-    100% {
-        background-color: var(--bg-second);
-    }
-}
+@use '@shared/styles/helpers/index' as *;
 
 .gridList {
-    .list {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 15px;
-    
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 15px;
+
+    @include tablet {
+        grid-template-columns: repeat(6, 2fr);
+    }
+
+    @include mobile {
+        grid-template-columns: repeat(2, 3fr);
+        gap: 10px;
+    }
+
+    &.five {
+        --columns: 5;
+        grid-template-columns: repeat(var(--columns), 1fr);
+
         @include tablet {
-            grid-template-columns: repeat(6, 2fr);
+            --columns: 3;
         }
-    
+
         @include mobile {
-            grid-template-columns: repeat(2, 3fr);
-            gap: 10px;
-        }
-
-        .card {
-            position: relative;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: var(--transition);
-            overflow: hidden;
-
-            .cardSceleton {
-                border-radius: 10px;
-                aspect-ratio: 5889160200228700/8412231522718843;
-                width: 100%;
-                background-color: var(--bg-3);
-                animation: wave 1s linear infinite alternate;
-            }
-    
-            .cardImg {
-                animation: wave 1s linear infinite alternate;
-                background-color: var(--bg-3);
-                width: 100%;
-                aspect-ratio: 5889160200228700/8412231522718843;
-                border-radius: 10px;
-                transition: var(--transition);
-
-                @include hover {
-                    opacity: 0.9;
-                }
-            }
-
-            button {
-                @include reset-button;
-                
-                img {
-                    cursor: pointer;
-                    position: absolute;
-                    top: 0;
-                    right: 10px;
-                    content: '';
-                    opacity: 0.8;
-                    width: 20px;
-                    height: 30px;
-
-                    @include hover {
-                        opacity: 1;
-                    }
-                }
-            }
+            --columns: 1;
         }
     }
-}
 
-@keyframes wave {
-    
+    &.list {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

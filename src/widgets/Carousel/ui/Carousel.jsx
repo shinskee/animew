@@ -1,43 +1,69 @@
-import { useNavigate } from 'react-router-dom'
-import SceletonTitleList from '../../../shared/ui/SceletonTitleList'
-import favoriteIcon from './../../../shared/images/favorite.svg'
-import favoriteOffIcon from './../../../shared/images/favorite-off.svg'
-import useFavorite from '../../../shared/helpers/useFavorite'
+import styles from "./Carousel.module.scss";
+import { classNames } from "@shared/lib/classNames/classNames";
+import { memo, useCallback, useMemo, useRef } from "react";
+import CarouselHeader from "./CarouselHeader";
+import Slider from "react-slick";
 
-import styles from './Carousel.module.scss'
-import { useState } from 'react'
+const Carousel = memo(
+  ({ cls, title, children, slides, slidesTablet, slidesMobile }) => {
+    
+    const sliderRef = useRef();
 
-function Carousel({ isFetching, data, dataFavorites, chunkSize }) {
-    const navigate = useNavigate()
-    const { onClickAddFavorite, onClickDeleteFavorite } = useFavorite()
+    const settings = useMemo(() => {
+      return {
+        infinite: true,
+        cssEase: "ease-in-out",
+        speed: 500,
+        slidesToShow: slides,
+        slidesToScroll: slides,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: slidesTablet,
+              slidesToScroll: slidesTablet,
+            },
+          },
+          {
+            breakpoint: 900,
+            settings: {
+              slidesToShow: slidesMobile,
+              slidesToScroll: slidesMobile,
+              initialSlide: slidesMobile,
+            },
+          },
+        ],
+      };
+    }, [slides, slidesMobile, slidesTablet]);
 
-    return ( 
-        <div className={styles.carousel}>
-                {!isFetching ? 
-                    (<div className={styles.list}>
-                            {data && data.slice(chunkSize[0], chunkSize[1]).map(e => (
-                                <div key={e.id} className={styles.card} >
-                                    <img src={e.poster?.src ? `https://anilibria.top${e.poster?.src}` : `https://anilibria.top${e.posters?.small.url}`} alt="" onClick={() => navigate(`/title/${e.id}`)} />       
-                                    {
-                                        dataFavorites?.filter(v => v.id === e.id).length === 1 ? (
-                                            <button onClick={() => onClickDeleteFavorite(e.id, e)}>
-                                                <img src={favoriteIcon} alt="" />
-                                            </button>
-                                        ) : (
-                                            <button onClick={() => onClickAddFavorite(e.id, e)}>
-                                                <img src={favoriteOffIcon} alt="" />
-                                            </button>
-                                        )
-                                    }
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <SceletonTitleList />
-                    )
-                }
-        </div>
-     );
-}
+    const onClickPrev = useCallback(() => {
+      sliderRef.current.slickPrev();
+    }, []);
+
+    const onClickNext = useCallback(() => {
+      sliderRef.current.slickNext();
+    }, []);
+
+    return (
+      <section
+        className={classNames(styles.carousel, {}, [
+          styles[cls],
+          "container",
+        ])}
+      >
+        <CarouselHeader onClickPrev={onClickPrev} onClickNext={onClickNext} title={title} sliderRef={sliderRef} />
+        <Slider
+          arrows={false}
+          className={styles.swiper}
+          ref={sliderRef}
+          {...settings}
+        >
+          {children}
+        </Slider>
+      </section>
+    );
+  }
+);
 
 export default Carousel;

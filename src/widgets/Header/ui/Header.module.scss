@@ -1,5 +1,4 @@
-@import './../../../shared/styles/media';
-@import './../../../shared/styles/mixins';
+@use '@shared/styles/helpers/index' as *;
 
 .headerWrapper {
     padding-block: 10px;
@@ -72,6 +71,12 @@
             }
         }
     }
+}
+
+.nav {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
 }
 
 @keyframes pulse {

@@ -1,12 +1,17 @@
 import styles from './PrevButton.module.scss'
 import LeftArrow from './../../../images/left-arrow.svg?react'
+import { memo } from 'react';
 
-function PrevButton({ ...props }) {
+const LeftArrowIcon = memo(() => {
+    return <LeftArrow className={styles.leftArrow} />
+})
+
+const PrevButton = memo(({ ...props }) => {
     return ( 
         <button {...props} className={styles.prevButton}>
-            <LeftArrow className={styles.leftArrow} />
+            <LeftArrowIcon />
         </button>
      );
-}
+})
 
 export default PrevButton;

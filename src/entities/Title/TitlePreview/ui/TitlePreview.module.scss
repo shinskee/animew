@@ -1,0 +1,36 @@
+@use '@shared/styles/helpers/index' as *;
+
+.titlePreview {
+  cursor: pointer;
+  position: relative;
+  border-radius: 10px;
+  width: 100%;
+  transition: all 0.2s;
+
+  img {
+    height: 100%;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  @include hover {
+    opacity: 0.9;
+
+    button {
+      opacity: 1;
+    }
+  }
+
+  button {
+    @include reset-button;
+
+    cursor: pointer;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: '';
+    opacity: 0;
+    background-color: var(--bg);
+    transition: opacity 0.2s;
+  }
+}

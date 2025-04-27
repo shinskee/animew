@@ -4,7 +4,7 @@ import { setAuth } from '../features/auth/authSlice';
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ 
-    baseUrl: 'https://anilibria.top/api/v1',
+    baseUrl: 'https://anilibria.tv/api/v3',
     prepareHeaders:  headers => {
         headers.set('Authorization', `Bearer ${localStorage.getItem('sn-token')}`)
     }}),

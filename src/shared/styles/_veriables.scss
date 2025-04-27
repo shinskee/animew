@@ -1,3 +1,5 @@
+@use './helpers/index' as *;
+
 :root {
     --dark: #0D0D0D;
     --dark-second: #1B1B1B;
@@ -33,7 +35,7 @@
     --button-height: 48px;
     --button-height-small: 48px;
 
-    --transition: all 0.2s;
+    --transition-duration: all 0.2s;
 
     --swiper-pagination-bottom: auto;
     --swiper-pagination-top: auto;

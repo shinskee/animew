@@ -13,30 +13,30 @@ export const animeApi = createApi({
   endpoints: (builder) => ({
     getUpdates: builder.query({
       // query: (page) => `title/updates?page=${page}&limit=8`,
-      query: () => `https://anilibria.top/api/v1/anime/releases/latest?limit=24`,
+      query: () => `title/updates?limit=24`,
     }),
     getFavorites: builder.query({
-        query: () => `https://anilibria.top/api/v1/accounts/users/me/favorites/releases`,
+        query: () => `https://anilibria.app/api/v1/accounts/users/me/favorites/releases`,
       }),
       getSearch: builder.query({
         query: (searchText) => `title/search?search=${searchText}&limit=-1&`,
       }),
       addFavorite: builder.query({
         query: (id) => ({
-            url: `https://anilibria.top/api/v1/accounts/users/me/favorites`,
+            url: `https://anilibria.app/api/v1/accounts/users/me/favorites`,
             method: `POST`,
             body: [{release_id: Number(id)}]
         }),
       }),
       deleteFavorite: builder.query({
         query: (id) => ({
-            url: `https://anilibria.top/api/v1/accounts/users/me/favorites`,
+            url: `https://anilibria.app/api/v1/accounts/users/me/favorites`,
             method: `DELETE`,
             body: [{release_id: Number(id)}]
         })
       }),
       getCatalogReleases: builder.query({
-        query: ({page, sortValue, genres, searchText, type, status, season, sound, age}) => `https://anilibria.top/api/v1/anime/catalog/releases?page=${page}&limit=${10}&f[sorting]=${sortValue}
+        query: ({page, sortValue, genres, searchText, type, status, season, sound, age}) => `https://anilibria.app/api/v1/anime/catalog/releases?page=${page}&limit=${10}&f[sorting]=${sortValue}
         &${genres && `f[genres]=${genres}`}&${searchText && `f[search]=${searchText}`}
         &${type && `f[types]=${type}`}&${status && `f[publish_statuses]=${status}`}
         &${season && `f[seasons]=${season}`}&${sound && `f[production_statuses]=${sound}`}
@@ -59,10 +59,10 @@ export const animeApi = createApi({
         }
       }),
       getCatalogSort: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/sorting`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/sorting`,
       }),
       getTitle: builder.query({
-        query: (id) => `https://anilibria.top/api/v1/anime/releases/${id}`,
+        query: (id) => `title?id=${id}`,
         transformResponse: (result) => result,
         async onQueryStarted(args,{ dispatch, queryFulfilled }) {
             const {data} = await queryFulfilled
@@ -74,31 +74,31 @@ export const animeApi = createApi({
         }
       }),
       getGenres: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/genres`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/genres`,
       }),
       getTypes: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/types`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/types`,
       }),
       getStatus: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/publish-statuses`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/publish-statuses`,
       }),
       getSounds: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/production-statuses`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/production-statuses`,
       }),
       getSeasons: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/seasons`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/seasons`,
       }),
       getAges: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/references/age-ratings`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/references/age-ratings`,
       }),
       getPopular: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/catalog/releases?page=1&limit=10&f[sorting]=RATING_DESC`,
+        query: () => `https://anilibria.app/api/v1/anime/catalog/releases?page=1&limit=10&f[sorting]=RATING_DESC`,
       }),
       getGenresMain: builder.query({
-        query: () => `https://anilibria.top/api/v1/anime/genres`,
+        query: () => `https://anilibria.app/api/v1/anime/genres`,
       }),
       getEpisode: builder.query({
-        query: (releaseEpisodeId) => `https://anilibria.top/api/v1/anime/releases/episodes/${releaseEpisodeId}`,
+        query: (releaseEpisodeId) => `https://anilibria.app/api/v1/anime/releases/episodes/${releaseEpisodeId}`,
         transformResponse: (result) => result,
         async onQueryStarted(args,{ dispatch, queryFulfilled }) {
             const {data} = await queryFulfilled

@@ -1,0 +1,62 @@
+@use 'sass:math';
+@use 'functions' as *;
+@use 'media' as *;
+
+@mixin fluid-text($max: 48, $min: 16) {
+  font-size: fluid($max, $min);
+}
+
+@mixin hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@mixin show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  clip-path: inset(100%) !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}
+
+@mixin reset-button {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+@mixin custom-scroll {
+  &::-webkit-scrollbar {
+      width: 10px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: var(--bg-second);
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--bg-3);
+      border-radius: 10px;
+      border: 1px solid var(--bg-3);
+  
+      @include hover {
+        background-color: var(--bg-4);
+      }
+    }
+}

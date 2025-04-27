@@ -1,0 +1,1 @@
+export const getFavoritesListData = (state) => state?.favorites?.favoritesList || []

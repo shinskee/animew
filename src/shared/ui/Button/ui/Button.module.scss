@@ -1,0 +1,11 @@
+@use '@shared/styles/helpers/index' as *;
+
+.button {
+  @include reset-button;
+
+  transition-duration: var(--transition-duration);
+
+  @include hover {
+    opacity: 0.8;
+  }
+}

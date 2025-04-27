@@ -1,1 +1,3 @@
-export { default } from './ui/Carousel';
+import Carousel from './ui/Carousel'
+
+export default Carousel

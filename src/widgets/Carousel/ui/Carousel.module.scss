@@ -1,59 +1,30 @@
-@import './../../../shared/styles/media';
-@import './../../../shared/styles/mixins';
+@use '@shared/styles/helpers/index' as *;
 
 .carousel {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .controls {
     display: flex;
     align-items: center;
-    column-gap: 20px;
+    column-gap: 10px;
 
-    .list {
-        display: grid;
-        grid-template-columns: repeat(8, 1fr);
-        gap: 15px;
-        height: 100%;
-        width: 100%;
-    
-        @include tablet {
-            grid-template-columns: repeat(6, 2fr);
-        }
-    
-        @include mobile {
-            grid-template-columns: repeat(2, 3fr);
-        }
-    
-        .card {
-            cursor: pointer;
-            position: relative;
-            border-radius: 10px;
-            width: 100%;
-            transition: all 0.2s;
-    
-            img {
-                height: 100%;
-                border-radius: 10px;
-                width: 100%;
-            }
+    .button {
+      width: 48px;
+      height: 48px;
+      background-color: transparent;
+      color: var(--light);
 
-            @include hover {
-                opacity: 0.9;
-            }
-
-            button {
-                @include reset-button;
-    
-                cursor: pointer;
-                position: absolute;
-                top: 0;
-                right: 10px;
-                content: '';
-                opacity: 0.8;
-                width: 20px;
-                height: 30px;
-    
-                @include hover {
-                    opacity: 1;
-                }
-            }
-        }
+      @include tablet {
+        width: 40px;
+        height: 40px;
+      }
     }
+  }
 }

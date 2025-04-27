@@ -1,0 +1,48 @@
+@use '@shared/styles/helpers/index' as *;
+
+.episodesPreview {
+  
+}
+
+.preview {
+  position: relative;
+  transition: all 0.2s;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+
+  @include hover {
+    box-shadow: 1px 1px 8px 0px black;
+
+    img {
+      opacity: 0.5;
+    }
+  }
+
+  img {
+    transition: all 0.2s;
+    opacity: 0.2;
+  }
+}
+
+.info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+
+  h2 {
+    font-size: 14px;
+  }
+}
+
+.isActive {
+  box-shadow: 1px 1px 8px 0px black;
+  
+  .preview {
+    border: 1px solid var(--dark-6);
+  }
+
+  img {
+    opacity: 0.8;
+  }
+}
