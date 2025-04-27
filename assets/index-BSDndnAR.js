@@ -1,0 +1,1 @@
+import{r as a,b as c,g as n,j as s,c as r,G as l,T as m}from"./index-Duj9VD9O.js";const x={},t={},v=a.memo(({cls:i})=>{const o=c(n);return s.jsx("section",{className:r(t.favoritesList,{},[t[i]]),children:s.jsx(l,{children:o.map(e=>s.jsx(m,{item:e},e.id))})})}),j=a.memo(()=>s.jsx("div",{className:r(x.favoritesPage,{},["container"]),children:s.jsx(v,{})}));export{j as default};
