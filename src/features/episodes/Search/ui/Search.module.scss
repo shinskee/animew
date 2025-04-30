@@ -1,4 +1,23 @@
 @use '@shared/styles/helpers/index' as *;
 
-.search {
+.input {
+  width: 100%;
+
+  
+  input {
+    background-color: var(--dark-2);
+    height: var(--input-height);
+    border-radius: var(--border-radius-small);
+    padding-inline: 10px;
+    width: 100%;
+
+    &:focus {
+      background-color: var(--dark-3);
+      outline: transparent;
+    }
+
+    @include hover {
+      background-color: var(--dark-3);
+    }
+  }
 }

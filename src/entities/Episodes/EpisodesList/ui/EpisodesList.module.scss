@@ -1,18 +1,7 @@
 @use '@shared/styles/helpers/index' as *;
 
 .episodesList {
-  background-color: var(--bg-3);
-}
-
-.grid {
-  --columns: 5;
-  grid-template-columns: repeat(var(--columns), 1fr);
-
-  @include tablet {
-    --columns: 4;
-  }
-
-  @include mobile {
-    --columns: 1;
-  }
+  background-color: var(--dark-3);
+  border-radius: var(--border-radius);
+  width: 100%;
 }

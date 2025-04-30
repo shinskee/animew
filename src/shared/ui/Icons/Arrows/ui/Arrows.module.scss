@@ -1,7 +1,7 @@
 @use '@shared/styles/helpers/index' as *;
 
 .arrow {
+  color: var(--light);
   width: 100%;
   height: 100%;
-  fill: transparent;
 }

@@ -31,7 +31,7 @@
 
         .paginationNotActive {
             @include hover {
-                background-color: var(--bg-3);
+                background-color: var(--dark-3);
             }
         }
     }

@@ -19,7 +19,7 @@
         border: none;
         transition: var(--transition);
         outline: transparent;
-        background-color: var(--bg-second);
+        background-color: var(--dark-second);
 
         @include hover {
             outline: 1px solid var(--primary-second)  
@@ -34,7 +34,7 @@
 
     .input {
         transition: all 0.2s;
-        background-color: var(--bg-second);
+        background-color: var(--dark-second);
         width: 0px;
     }
 

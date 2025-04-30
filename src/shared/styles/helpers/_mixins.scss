@@ -47,16 +47,16 @@
     }
   
     &::-webkit-scrollbar-track {
-      background: var(--bg-second);
+      background: var(--dark-second);
     }
   
     &::-webkit-scrollbar-thumb {
-      background-color: var(--bg-3);
+      background-color: var(--dark-3);
       border-radius: 10px;
-      border: 1px solid var(--bg-3);
+      border: 1px solid var(--dark-3);
   
       @include hover {
-        background-color: var(--bg-4);
+        background-color: var(--dark-4);
       }
     }
 }

@@ -3,7 +3,7 @@
 .nextButton {
     @include reset-button;
 
-    background-color: var(--bg-3);
+    background-color: var(--dark-3);
     height: var(--button-height);
     aspect-ratio: 1;
     display: flex;

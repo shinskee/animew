@@ -22,7 +22,7 @@
 body {
   @include fluid-text(16, 14);
 
-  background: var(--bg);
+  background: var(--dark);
 
   @include custom-scroll;
 }

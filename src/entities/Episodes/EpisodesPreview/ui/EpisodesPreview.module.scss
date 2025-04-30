@@ -8,7 +8,7 @@
   position: relative;
   transition: all 0.2s;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   overflow: hidden;
 
   @include hover {
@@ -22,6 +22,7 @@
   img {
     transition: all 0.2s;
     opacity: 0.2;
+    background-color: var(--color-accent);
   }
 }
 
@@ -36,13 +37,54 @@
 }
 
 .isActive {
-  box-shadow: 1px 1px 8px 0px black;
-  
   .preview {
     border: 1px solid var(--dark-6);
+    border-radius: var(--border-radius);
+    box-shadow: 1px 1px 8px 0px black;
+  }
+
+  .info {
+    h2 {
+      color: var(--color-accent);
+    }
   }
 
   img {
     opacity: 0.8;
+  }
+}
+
+.list {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--dark-4);
+
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+  .preview {
+    display: flex;
+    column-gap: 20px;
+  }
+
+  img {
+    width: 200px;
+    border-radius: var(--border-radius);
+  }
+
+  .info {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 10px;
+    position: relative;
+    bottom: unset;
+    left: unset;
+
+    .name {
+      color: var(--dark-5);
+    }
   }
 }

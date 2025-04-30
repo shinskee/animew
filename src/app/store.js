@@ -3,6 +3,7 @@ import { apiInstance } from '../shared/api/base'
 import { createReducerManager } from './reducerManager'
 import { api } from '../shared/api/api'
 import { favoritesListReducer } from '../entities/FavoritesList/model/favoritesListSlice'
+import { episodesListReducer } from '../entities/Episodes/EpisodesList/model/episodesListSlice'
 
 
 const rootReducers = {

@@ -6,46 +6,42 @@ import GridTypeChange from '../../../features/episodes/GridTypeChange/ui/GridTyp
 import ListTypeChange from '../../../features/episodes/ListTypeChange/ui/ListTypeChange'
 import Sort from '../../../features/episodes/Sort/ui/Sort'
 import Search from '../../../features/episodes/Search/ui/Search'
+import Button from '../../../shared/ui/Button/ui/Button'
+import { useSelector } from 'react-redux'
 
-const Episodes = memo( ({cls, data, currentEpisode = ''}) => {
+const Episodes = memo( ({cls, currentEpisode = ''}) => { 
+  const data = useSelector(state => state?.episodes?.episodesList)
+  
   const [ episodes, setEpisodes ] = useState(data)
   
+  const [ chunk, setChunk ] = useState(10)
   const [ filterEpisodes, setFilterEpisodes ] = useState(episodes)
 
   const [typeList, setTypeList] = useState('grid')
   const [sort, setSort] = useState('old')
   const [searchValue, setSearchValue] = useState('')
 
-  const onClickListChange = useCallback(() => {
-    setTypeList('list')
-  }, [])
-
-  const onClickGridChange = useCallback(() => {
-    setTypeList('grid')
-  }, [])
-
-  const sortChange = useCallback(() => {
-    if (sort === 'old') {
-      setFilterEpisodes(filterEpisodes.sort((a, b) => a.episode - b.episode))
-      setSort('new')
-    } else {
-      setFilterEpisodes(filterEpisodes.sort((a, b) => b.episode - a.episode))
-      setSort('old')
-    }
-  }, [filterEpisodes, sort])
-
   useEffect(() => {
     setFilterEpisodes(episodes?.filter((episode) => episode.episode.toString().includes(searchValue)))
   }, [episodes, searchValue])
 
+  const onClickMore = useCallback(() => {
+    setChunk(prev => prev + 5)
+  }, [])
+
   return (
-    <div className={classNames(styles.episodes, {}, [styles[cls], 'container'])}>
-      <Search setSearchValue={setSearchValue} searchValue={searchValue} />
-      <Sort onClick={sortChange} />
-      <GridTypeChange cls={typeList === 'grid' && styles.isActive} onClick={onClickGridChange} />
-      <ListTypeChange cls={typeList === 'list' && styles.isActive} onClick={onClickListChange} />
+    <section className={classNames(styles.episodes, {}, [styles[cls], 'container'])}>
+      <div className={styles.filter}  >
+        <Search setSearchValue={setSearchValue} searchValue={searchValue} />
+        <Sort typeList={typeList} chunk={chunk} data={data} setEpisodes={setEpisodes} sort={sort} setSort={setSort} />
+        <GridTypeChange setTypeList={setTypeList} typeList={typeList} />
+        <ListTypeChange setTypeList={setTypeList} typeList={typeList} />
+      </div>
       <EpisodesList currentEpisode={currentEpisode} searchValue={searchValue} sort={sort} episodes={filterEpisodes} type={typeList} />
-    </div>
+      {(typeList === 'list' && chunk < data.length) && (
+        <Button type={'text'} align={'center'} onClick={onClickMore}>Показать еще</Button>
+      )}
+    </section>
   )
 })
 

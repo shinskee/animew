@@ -2,24 +2,37 @@ import { memo } from "react";
 import styles from "./TitlePage.module.scss";
 import { classNames } from "@shared/lib/classNames/classNames";
 import Loader from "../../../shared/ui/Loader/Loader";
-import { useParams } from "react-router-dom";
+import { useLocation, useMatches, useParams } from "react-router-dom";
 import { useGetTitle } from "../../../entities/Title/TitleDescription/api/titleApi";
-import TitleDescription from "../../../entities/Title/TitleDescription";
+import TitleDescription, {
+  titleDescriptionReducer,
+} from "../../../entities/Title/TitleDescription";
 import EpisodesList from "../../../entities/Episodes/EpisodesList/ui/EpisodesList";
 import Episodes from "../../../widgets/Episodes/ui/Episodes";
+import { useGetEpisode } from "../../../entities/Episodes/EpisodeDescription/api/episodeApi";
+import Breadcrumbs from "../../../shared/ui/Breadcrumbs/ui/Breadcrumbs";
+import DynamicModuleLoader from "../../../shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
+import { episodesListReducer } from "../../../entities/Episodes/EpisodesList/model/episodesListSlice";
 
-const TitlePage = memo(() => {  
+const initialReducers = {
+  title: titleDescriptionReducer,
+  episodes: episodesListReducer,
+};
+
+const TitlePage = memo(() => {
   const params = useParams();
-  const {data, isLoading, isError} = useGetTitle(params.id)
+  const { isLoading } = useGetTitle(params.id);
 
   if (isLoading) return <Loader />;
-  if (isError) return <div>Ошибка, попробуйте позже</div>
 
   return (
-      <main>
-        <TitleDescription item={data} />
-        <Episodes data={data.player.list} />
-      </main>
+    <main>
+      <DynamicModuleLoader reducers={initialReducers} >
+        <Breadcrumbs />
+        <TitleDescription />
+        <Episodes />
+      </DynamicModuleLoader>
+    </main>
   );
 });
 

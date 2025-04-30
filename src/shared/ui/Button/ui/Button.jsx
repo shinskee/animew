@@ -1,13 +1,19 @@
-import styles from './Button.module.scss'
-import { classNames } from '@shared/lib/classNames/classNames'
-import { memo } from 'react'
+import styles from "./Button.module.scss";
+import { classNames } from "@shared/lib/classNames/classNames";
+import { memo } from "react";
 
-const Button = memo( ({cls, children, ...props}) => {
+const Button = memo(({ cls, tooltip, isActive, children, type, align, ...props }) => {
   return (
-    <button {...props} className={classNames(styles.button, {}, [cls])}>
-      {children}
-    </button>
-  )
-})
+    <div className={styles.wrapper}>
+      <button
+        {...props}
+        className={classNames(styles.button, {}, [styles[type], styles[isActive], styles[align], cls])}
+      >
+        {children}
+      </button>
+      <span>{tooltip}</span>
+    </div>
+  );
+});
 
-export default Button
+export default Button;

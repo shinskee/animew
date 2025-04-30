@@ -1,8 +1,15 @@
 import styles from "./TitleDescription.module.scss";
 import { classNames } from "@shared/lib/classNames/classNames";
 import { memo } from "react";
+import AddToFavorite from "../../../../features/favorites/AddToFavorite/ui/AddToFavorite";
+import { useParams } from "react-router-dom";
+import { useGetTitle } from "../api/titleApi";
+import Loader from "../../../../shared/ui/Loader/Loader";
+import { useSelector } from "react-redux";
+import { getTitleData } from "../model/selectors";
 
-const TitleDescription = memo(({ item }) => {
+const TitleDescription = memo(() => {
+  const item = useSelector(getTitleData)
   return (
     <section className={classNames(styles.titleDescription, {}, ["container"])}>
       <div className={styles.poster}>
@@ -70,6 +77,7 @@ const TitleDescription = memo(({ item }) => {
             </div>
           </div>
         </dl>
+        <AddToFavorite item={item} />
       </div>
     </section>
   );

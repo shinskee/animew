@@ -1,9 +1,9 @@
 import styles from './AddToFavorite.module.scss'
-import { classNames } from '@shared/lib/classNames/classNames'
 import { memo, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { favoritesListActions } from '../../../../entities/FavoritesList/model/favoritesListSlice'
 import { getFavoritesListData } from '../../../../entities/FavoritesList/model/selectors'
+import Button from '../../../../shared/ui/Button/ui/Button'
 
 const AddToFavorite = memo( ({cls, item}) => {
   const dispacth = useDispatch()
@@ -28,13 +28,13 @@ const AddToFavorite = memo( ({cls, item}) => {
 
   return (
       isFavorite ? (
-        <button onClick={onClickDelete} className={classNames(styles.addToFavorite, {}, [styles[cls]])}>
+        <Button type={'text'} onClick={onClickDelete} cls={styles.button}>
           Удалить с избранного
-        </button>
+        </Button>
       ) : (
-        <button onClick={onClickAdd} className={classNames(styles.addToFavorite, {}, [styles[cls]])}>
+        <Button type={'text'} onClick={onClickAdd} cls={styles.button}>
           Добавить в избранное
-        </button>
+        </Button>
       )
   )
 })

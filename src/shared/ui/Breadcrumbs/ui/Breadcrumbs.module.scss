@@ -1,0 +1,48 @@
+@use '@shared/styles/helpers/index' as *;
+
+.breadcrumbs {
+  display: flex;
+  column-gap: 10px;
+  padding-block: 10px;
+
+  a {
+    text-decoration: none;
+
+    @include hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.crumb {
+  display: flex;
+  column-gap: 10px;
+
+  &:not(:last-child) {
+    display: inline-flex;
+    column-gap: 10px;
+
+    &::after {
+      content: '/';
+      user-select: none;
+      cursor: auto;
+    }
+  }
+
+  div {
+    display: flex;
+    column-gap: 10px;
+    text-decoration: none;
+
+      &:not(:last-child) {
+        display: inline-flex;
+        column-gap: 10px;
+
+        &::after {
+          content: '/';
+          user-select: none;
+          cursor: auto;
+        }
+      }
+  }
+}

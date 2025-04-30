@@ -14,6 +14,7 @@ const TitlePreview = memo(({ cls, item, ...props }) => {
         src={
           `${API_IMAGES}${item?.posters.small.url}`
         }
+        // style={{backgroundImage: `url(${API_IMAGES}${item?.posters.small.url})`}}
         alt=""
         onClick={() => navigate(`/title/${item.id}`)}
       />

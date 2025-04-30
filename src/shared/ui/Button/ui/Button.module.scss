@@ -1,11 +1,73 @@
 @use '@shared/styles/helpers/index' as *;
 
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
 .button {
   @include reset-button;
+
+  background-color: var(--dark-2);
+  border-radius: var(--border-radius-small);
 
   transition-duration: var(--transition-duration);
 
   @include hover {
-    opacity: 0.8;
+    background-color: var(--dark-3);;
+  }
+
+  &:active {
+    background-color: var(--dark-4);
+  }
+}
+
+.text {
+  height: var(--button-height);
+  color: var(--light);
+  padding-inline: 20px;
+
+  &.center {
+    align-self: center;
+  }
+}
+
+.icon {
+  width: var(--button-height);
+  height: var(--button-height);
+
+  & +span {
+    position: absolute;
+    // left: calc(-var(--button-height));
+    right: 0;
+    bottom: calc(var(--button-height) + 10px);
+    color: var(--light);
+    background-color: var(--dark-5);
+    border-radius: var(--border-radius-small);
+    padding-inline: 10px;
+    visibility: hidden;
+    opacity: 0;
+    transition-duration: 0.2s;
+    scale: 0;
+    font-size: 14px;
+    text-wrap: nowrap;
+  }
+
+  @include hover {
+    & +span {
+      visibility: visible;
+      opacity: 1;
+      scale: 1;
+    }
+  }
+}
+
+.isActive {
+  background-color: var(--color-accent);
+
+  @include hover {
+    background-color: var(--color-accent-1);
   }
 }

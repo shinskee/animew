@@ -1,4 +1,19 @@
 @use '@shared/styles/helpers/index' as *;
 
 .sort {
+  width: var(--button-height);
+  height: var(--button-height);
+}
+
+.rotate180,
+.rotate0 {
+  transition-duration: var(--transition-duration);
+}
+
+.rotate180 {
+  rotate: 180deg;
+}
+
+.rotate0 {
+  rotate: 0;
 }

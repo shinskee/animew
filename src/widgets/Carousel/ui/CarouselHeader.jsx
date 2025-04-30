@@ -11,10 +11,10 @@ const CarouselHeader = memo( ({title, onClickPrev, onClickNext}) => {
     <div className={classNames(styles.header, {}, [])}>
       <Title>{title}</Title>
       <div className={styles.controls}>
-        <Button onClick={onClickPrev} cls={styles.button}>
+        <Button onClick={onClickPrev} cls={styles.button} type={'icon'}>
           <LeftArrow />
         </Button>
-        <Button onClick={onClickNext} cls={styles.button}>
+        <Button onClick={onClickNext} cls={styles.button} type={'icon'}>
           <RightArrow />
         </Button>
       </div>
