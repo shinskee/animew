@@ -18,21 +18,15 @@
   @include hover {
     opacity: 0.9;
 
-    button {
+    .favoriteButton {
       opacity: 1;
     }
   }
 
-  button {
-    @include reset-button;
-
-    cursor: pointer;
+  .favoriteButton {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    content: '';
+    bottom: 10px;
+    right: 10px;
     opacity: 0;
-    background-color: var(--dark);
-    transition: opacity 0.2s;
   }
 }

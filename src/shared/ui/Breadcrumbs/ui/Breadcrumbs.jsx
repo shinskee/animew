@@ -1,11 +1,10 @@
 import styles from "./Breadcrumbs.module.scss";
 import { classNames } from "@shared/lib/classNames/classNames";
 import { memo } from "react";
-import { useMatches, useParams, useRoutes } from "react-router-dom";
+import { useMatches } from "react-router-dom";
 
 const Breadcrumbs = memo(({ cls }) => {
   const matches = useMatches();
-  const params = useParams();
   console.log(matches);
   
   const crumbs = matches
@@ -15,8 +14,6 @@ const Breadcrumbs = memo(({ cls }) => {
         ? match.handle.crumb(match)
         : match.handle.crumb
     );
-
-  console.log(crumbs);
 
   return (
     <div className={classNames(styles.breadcrumbs, {}, [cls, 'container'])}>

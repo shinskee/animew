@@ -5,7 +5,6 @@ import Home from '../../../pages/Home'
 import { useSelector } from 'react-redux'
 import { getCurrentEpisodeName } from '../../../entities/Episodes/EpisodesPreview'
 import { getTitleName } from '../../../entities/Title/TitleDescription'
-import { getTitleId } from '../../../entities/Title/TitleDescription/model/selectors'
 const TitlePage = lazy(() => import('../../../pages/TitlePage'))
 const FavoritesPage = lazy(() => import('../../../pages/FavoritesPage'))
 const EpisodePage = lazy(() => import('../../../pages/EpisodePage'))

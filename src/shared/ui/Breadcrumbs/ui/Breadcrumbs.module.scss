@@ -7,9 +7,10 @@
 
   a {
     text-decoration: none;
+    transition-duration: var(--transition-duration);
 
     @include hover {
-      color: var(--color-accent);
+      color: var(--dark-7);
     }
   }
 }

@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { favoritesListActions } from '../../../../entities/FavoritesList/model/favoritesListSlice'
 import { getFavoritesListData } from '../../../../entities/FavoritesList/model/selectors'
 import Button from '../../../../shared/ui/Button/ui/Button'
+import ReduceIcon from '../../../../shared/ui/Icons/Reduce'
+import AddIcon from '../../../../shared/ui/Icons/Add'
 
 const AddToFavorite = memo( ({cls, item}) => {
   const dispacth = useDispatch()
@@ -28,12 +30,12 @@ const AddToFavorite = memo( ({cls, item}) => {
 
   return (
       isFavorite ? (
-        <Button type={'text'} onClick={onClickDelete} cls={styles.button}>
-          Удалить с избранного
+        <Button tooltip={'Удалить из избранного'} type={'icon'} onClick={onClickDelete} >
+          <ReduceIcon />
         </Button>
       ) : (
-        <Button type={'text'} onClick={onClickAdd} cls={styles.button}>
-          Добавить в избранное
+        <Button tooltip={'Добавить в избранное'} type={'icon'} onClick={onClickAdd} >
+          <AddIcon />
         </Button>
       )
   )

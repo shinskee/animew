@@ -18,7 +18,9 @@ const TitlePreview = memo(({ cls, item, ...props }) => {
         alt=""
         onClick={() => navigate(`/title/${item.id}`)}
       />
-      <AddToFavorite item={item} />
+      <div className={styles.favoriteButton}>
+        <AddToFavorite item={item} />
+      </div>
     </div>
   );
 });
