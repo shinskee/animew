@@ -1,0 +1,1 @@
+import{r as m,j as a,d as _}from"./index-CezPYTQ0.js";const c="_gridList_15mvk_1",d="_five_15mvk_17",n="_list_15mvk_31",s={gridList:c,five:d,list:n},l=m.memo(({children:t,cls:i,columns:r,type:e,...o})=>a.jsx("div",{...o,className:_(s.gridList,{},[i,[s[r]],[s[e]]]),children:t}));export{l as G};
