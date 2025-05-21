@@ -1,0 +1,1 @@
+import{p as a,i as o,r as u}from"./index-B_PAhCEP.js";const d=e=>{const r=a(),s=o();u.useEffect(()=>{Object.entries(e).forEach(([t,c])=>{r.reducerManager.add(t,c),s({type:`@INIT ${t} reducer`})})},[s,e,r.reducerManager])};export{d as u};

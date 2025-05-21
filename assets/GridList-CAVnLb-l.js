@@ -1,0 +1,1 @@
+import{r as m,j as a,c}from"./index-B_PAhCEP.js";const _="_gridList_z1ym0_1",n="_five_z1ym0_17",d="_list_z1ym0_31",s={gridList:_,five:n,list:d},x=m.memo(({children:t,cls:i,columns:r,type:e,...o})=>a.jsx("div",{...o,className:c(s.gridList,{},[i,[s[r]],[s[e]]]),children:t}));export{x as G};
