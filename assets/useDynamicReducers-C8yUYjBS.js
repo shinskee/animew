@@ -1,0 +1,1 @@
+import{m as a,k as o,r as u}from"./index-BtSxGRPc.js";const p=e=>{const r=a(),s=o();u.useEffect(()=>{Object.entries(e).forEach(([t,c])=>{r.reducerManager.add(t,c),s({type:`@INIT ${t} reducer`})})},[s,e,r.reducerManager])};export{p as u};
